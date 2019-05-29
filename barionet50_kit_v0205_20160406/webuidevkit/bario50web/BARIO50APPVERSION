@@ -1,0 +1,65 @@
+0110
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+Vers  Date     Who  What
+A1.00 13.05.09 AD - initial revision based on barionet 2.02
+      09.06.09 PK - removed I/O Protocol setting from the I/O Setup page
+      10.06.09 PK - Input polarity configuration removed - does not apply on Barionet 50
+                  - kept the uiio.html for information and future use (no config options available)
+      28.07.09 PK - default syslog level 1
+      06.08.09 PK - added number of temperature sensors into the temp page
+      21.08.09 PK - target frame in "Update" changed from _blank to _top
+      27.08.09 PK - updated help page of "Update"
+      23.09.09 PK - fixed wrong default values for local ports of serial intefaces (bugfix #064.14)
+                  - updated serial helps, added default settings
+		              - "Control" page reorganized
+		              - added software flow control to RS232 settings
+A1.01 30.09.09 DB - deleted RS-422 from serial config and help
+                  - cosmetic changes on I/O, CONTROL and TEMP config pages
+                  - reverted defaults "BCL Program Name" to empty (legacy)
+      05.10.09 DB - fixed link color in update page, fixed UI version display
+      06.10.09 PK - uihupdate.html updated
+      08.10.09 PK - WEB UI version is printed via a dynamic mark (feature #064.26)
+                  - more version informations added (bootloader, drivers)
+01.02 19.10.09 PK - minor change on the Update page: version information
+01.03 12.01.10 PK - #064.29: SAVE button removed
+      27.01.10 KS - Bug #14.03 Barionet.mib/zip updated with systax error fixes
+01.04 01.02.10 PK - #64.46: added WEB password and a new tab "security"
+      03.02.10 PK - config.bin size increased to 138 to also cover the WEB password
+01.05 11.03.10 PK - config.bin size increased to 512 to clean for future parameters
+01.06 22.03.10 PK - Setup version increased from 02 to 03
+                  - corrected non-working config.bin defaults
+      26.04.10 PK - bugfix #64.57: wrong rate at 230400 bauds - was in fact 187500
+      02.11.10 PK - fixed wrong input numbering in uiio.html
+      11.11.10 PK - #064.62: logout page changed to "please close the browser"
+      24.11.10 PK - typo correction in the security help: "passowrd"
+01.07 03.12.10 PK - #64.64: removed 1 user login limitation and removed "Logout" button from all pages
+      08.12.10 PK - typo corrections in the "Security" help and configuration page
+01.08 23.11.11 JP - #64.66: URL for barix and download section was missing on barix logo.
+                            URL is updated.
+01.09 12.11.12 AD - added frame name to application config frame, to allow form targeting.
+01.10 09.04.15 KS - uimenu0.html: incorrect "alt" changed to "title". Hover should now show text
+      20.04.15 KS - uimenu.html:  incorrect "alt" changed to "title". Hover should now show text
+      20.04.15 KS - global edit color: #8f2635(red) -> #FFFFFF(white)
+      20.04.15 KS - {uicontrol,uiio,uinetwork,uisecurity,uiserial,uisnmp,uitemp,uitime}.html tabs->black
+      20.04.15 KS - {uigmconf,uigmstat}.gif changed background to white
+      24.04.15 KS - uimenu.html: rewritten to use div and inline menu (intermediate change)
+      24.04.15 KS - uimenu0.html: rewritten to use div and inline menu (intermediate change)
+      27.04.15 KS - uiglogo.gif updated with new logo (Barionet removed)
+      27.04.15 KS - uimenu.html: device config gif removed, Barionet defined as text under BARIX.
+      27.04.15 KS - uimenu0.html: device status gif removed, Barionet defined as text under BARIX.
+      28.04.15 KS - uimenu0.html: removed incorrect area hover
+      28.04.15 KS - index.html removed extra >s
+      28.04.15 KS - uigd.gif replaced with new front panel, uistatus.html updated accordingly
+      04.05.15 KS - uigd.gif converted to show 4 input LEDs, surrounding text removed
+      04.05.15 KS - uimenu,uimenu0.html updated styles and layout: font and type to Barionet 50
+      04.05.15 KS - uistatus,uistatus2,uistatusn.html updated styles and layout
+      05.05.15 KS - uireboot3, uihdefaults, uihupdate .html: cosmetic changes.
+      11.05.15 KS - uimenu,uimenu0.html Barix smaller, font ->3, bottom aligned, left padding via CSS
+      12.05.15 KS - left padding set to 20px for the following 22 files (see ls and grep command line):
+                    (ls *.html|grep -v uih|grep -v uif|grep -v update.html|grep -v index|grep -v uiconfig)
+      12.05.15 KS - uimenu0.html added more meaningfull title: CONFIGURE & MANAGE DEVICE
+      12.05.15 KS - uimenu,uimenu0.html changed barionet 50 hover:  VISIT THE BARIX WEBSITE - DOWNLOADS
+      21.05.15 KS - #64.78 & #64.90 uifappsetup1: 1 added to html, new method 4 added for @name selection
+      21.05.15 KS - uimenu.html Application -> Application Setup
+      06.01.16 PK - #064.94: added B198b0 control to enable virtual traps
+*/

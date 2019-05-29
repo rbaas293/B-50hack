@@ -1,0 +1,35 @@
+<html>
+<body bgcolor="#CCCCCC">
+<p><b><font face="Arial">Help</b></font><br><br>
+<font size="2" face="Arial"><b>SNMP</b><br>
+Barix Barionet 50 can issue a specific SNMP trap triggered by a digital input.<br><br>
+<b>Trap Receiver</b><br>
+Enter the 4 values of the desired SNMP Trap receiver IP address  e.g.:<br>
+<em>&quot;0.0.0.0&quot;</em> for no receiver<br>
+<em>&quot;192.168.0.12&quot;</em> for a specific receiver<br>
+<em>&quot;192.168.0.255&quot;</em> for a subnet SNMP broadcast<br>
+<b><br>
+Repeat time<br>
+</b>When an input is active
+the trap will be issued repeatedly with this time in seconds until the input
+becomes inactive.<br>
+Enter <em>&quot;0&quot;</em> to deactivate repetition (results in two traps being
+sent, one
+for
+an input going active
+and one for it going inactive)<br>
+<b><br>
+Trap<br>
+</b>For each input select if a trap should be issued when the state changes.Default
+setting is <em>&quot;No&quot;</em>.<br>
+<br>
+<b>Virtual Inputs</b><br>
+Virtual input registers 205-300 can also send traps on change. Enable this option to trigger an SNMP trap
+every time a virtual input register value changes.<br>
+Default setting is <em>&quot;No&quot;</em>.<br>
+<b><br>
+SNMP definition file (Private MIB)<br>
+</b>In order to use the SNMP functions a private MIB definition file called Barionet.MIB is needed.<br><br>
+<a href="Barionet.MIB" target="_blank">View MIB in the browser</a> or <a href="Barionet_MIB.zip">download zipped MIB file</a>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<html>&L(0,"*",2);
+  <head>
+    <style type="text/css">
+    body.lpadding {
+          padding-left: 20px;
+    }
+    </style>
+    <script language=JavaScript src=util.js></script>
+  </head>
+  <body class="lpadding" bgcolor=#FFFFFF link=#FFFFFF vlink=#FFFFFF leftmargin="0">
+    <font size=3 face=Arial>
+	<form action=setup.cgi method=get target=_top>
+		<table width=640 height="55" border=0 cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="middle"><font size=3><b>&nbsp;SETTINGS</td>
+			</tr>
+		</table>
+	</form>
+    <table width=720 cellpadding="0" cellspacing="0" bgcolor=#000000>
+      <tr align="center">
+        <td width=80 height=30 background="uigl.gif"><font size=1><a href="uifnetwork.html" title="NETWORK SETTINGS" target="config">NETWORK</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifserial.html" title="SERIAL SETTINGS" target="config">SERIAL</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifio.html" title="INPUT/OUTPUT SETTINGS" target="config">I/O</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifcontrol.html" title="CONTROL/INFO/DEBUG SETTINGS" target="config">CONTROL</a></td>
+        <td width=80 background="uigs.gif"><font size=1>SNMP</td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftime.html" title="NTP TIME SETTINGS" target="config">TIME</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftemp.html" title="1-WIRE TEMPERATUR SENSOR SETTINGS" target="config">TEMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsecurity.html" title="PASSWORD SETTINGS" target="config">SECURITY</a></td>
+        <td width="80" valign="bottom" bgcolor="#FFFFFF"><img src="uigg.gif" width="80" height="1"></td>
+      </tr>
+    </table><br>
+	<table>
+      <form action=setup.cgi method=get>
+        <input type="hidden" name=L value=uisaved.html>
+        <tr>
+          <td><b><font size=2>Trap Receiver</td>
+          <td><font size=2>
+            <input name=B48 size=3 maxlength=3 value=&LSetup(1,"%u",48); onChange=IPCheck(this)><b> . </b>
+        <input name=B49 size=3 maxlength=3 value=&LSetup(1,"%u",49); onChange=IPCheck(this)><b> . </b>
+        <input name=B50 size=3 maxlength=3 value=&LSetup(1,"%u",50); onChange=IPCheck(this)><b> . </b>
+        <input name=B51 size=3 maxlength=3 value=&LSetup(1,"%u",51); onChange=IPCheck(this)> (0.0.0.0 for no traps)</td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Repeat time</td>
+          <td><font size=2>
+            <input name=W68 size=5 maxlength=5 value=&LSetup(1,"%u",68,W); onChange=IntCheck(this)> seconds</td>
+	    </tr>
+        <tr>
+          <td><font size=2><b><br>Digital Input</td>
+
+          <td><font size=2><b><br>Trap</td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Input #1</td>
+		  <td>
+            <select size=1 name=B65b0>
+              <option value=1&LSetup(3,"%s",65,b0,1," selected");>Yes</option>
+              <option value=0&LSetup(3,"%s",65,b0,0," selected");>No</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Input #2</td>
+		  <td>
+            <select size=1 name=B65b1>
+              <option value=1&LSetup(3,"%s",65,b1,1," selected");>Yes</option>
+              <option value=0&LSetup(3,"%s",65,b1,0," selected");>No</option>
+            </select>
+          </td>
+        <tr>
+          <td><b><font size=2>Input #3</td>
+          <td>
+            <select size=1 name=B65b2>
+              <option value=1&LSetup(3,"%s",65,b2,1," selected");>Yes</option>
+              <option value=0&LSetup(3,"%s",65,b2,0," selected");>No</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Input #4</td>
+		  <td>
+            <select size=1 name=B65b3>
+              <option value=1&LSetup(3,"%s",65,b3,1," selected");>Yes</option>
+              <option value=0&LSetup(3,"%s",65,b3,0," selected");>No</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><font size=2><b><br>Virtual Inputs</td>
+          <td><font size=2><b><br>Trap</td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Enable traps</td>
+		  <td>
+            <select size=1 name=B198b0>
+              <option value=1&LSetup(3,"%s",198,b0,1," selected");>Yes</option>
+              <option value=0&LSetup(3,"%s",198,b0,0," selected");>No</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+            <input name="submit" type="submit" value=" OK ">
+            <input name="reset" type="reset" value=" Cancel ">
+          </td>
+        </tr>
+      </form>
+    </table>
+</body>
+</html>

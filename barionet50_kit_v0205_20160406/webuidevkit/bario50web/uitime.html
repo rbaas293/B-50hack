@@ -1,0 +1,111 @@
+<html>&L(0,"*",2);
+  <head>
+    <style type="text/css">	
+      body.lpadding {
+          padding-left: 20px;
+      }
+    </style>  
+    <script language=JavaScript src=util.js></script>
+  </head>
+  <body class="lpadding" bgcolor=#FFFFFF link=#FFFFFF vlink=#FFFFFF leftmargin="0">
+    <font size=3 face=Arial>
+	<form action=setup.cgi method=get target=_top>
+		<table width=640 height="55" border=0 cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="middle"><font size=3><b>&nbsp;SETTINGS</td>
+			</tr>
+		</table>
+	</form>
+    <table width=720 cellpadding="0" cellspacing="0" bgcolor=#000000>
+      <tr align="center">
+        <td width=80 height=30 background="uigl.gif"><font size=1><a href="uifnetwork.html" title="NETWORK SETTINGS" target="config">NETWORK</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifserial.html" title="SERIAL PORT SETTINGS" target="config">SERIAL</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifio.html" title="INPUT/OUTPUT SETTINGS" target="config">I/O</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifcontrol.html" title="CONTROL/INFO/DEBUG SETTINGS" target="config">CONTROL</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsnmp.html" title="SNMP SETTINGS" target="config">SNMP</a></td>
+        <td width=80 height=30 background="uigs.gif"><font size=1>TIME</td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftemp.html" title="1-WIRE TEMPERATUR SENSOR SETTINGS" target="config">TEMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsecurity.html" title="PASSWORD SETTINGS" target="config">SECURITY</a></td>
+        <td width="80" valign="bottom" bgcolor="#FFFFFF"><img src="uigg.gif" width="80" height="1"></td>
+      </tr>
+    </table><br>
+
+    <table>
+      <form action=setup.cgi method=get>
+        <input type="hidden" name=L value=uisaved.html>
+        <tr>
+          <td><b><font size=2>NTP Server</td>
+          <td><font size=2>
+            <input name=B84 size=3 maxlength=3 value=&LSetup(1,"%u",84); onChange=IPCheck(this)><b> . </b>
+            <input name=B85 size=3 maxlength=3 value=&LSetup(1,"%u",85); onChange=IPCheck(this)><b> . </b>
+            <input name=B86 size=3 maxlength=3 value=&LSetup(1,"%u",86); onChange=IPCheck(this)><b> . </b>
+            <input name=B87 size=3 maxlength=3 value=&LSetup(1,"%u",87); onChange=IPCheck(this)> (0.0.0.0 for none)</font></td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Onewire RTC</td>
+          <td><font size=2>&LIO(3,"",-1);</font></td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Time Zone</font></b></td>
+          <td><select size=1 name=B94>
+              <option value=232&LSetup(3,"%s",94,B,232," selected");>-12 (Kwajalein,
+              Eniwetok)</option>
+              <option value=234&LSetup(3,"%s",94,B,234," selected");>-11 (Samoa,
+              Midway Islands)</option>
+              <option value=236&LSetup(3,"%s",94,B,236," selected");>-10 (Hawaii)</option>
+              <option value=238&LSetup(3,"%s",94,B,238," selected");>-9 (Alaska)</option>
+              <option value=240&LSetup(3,"%s",94,B,240," selected");>-8 (US Pacific)</option>
+              <option value=242&LSetup(3,"%s",94,B,242," selected");>-7 (US Mountain)</option>
+              <option value=244&LSetup(3,"%s",94,B,244," selected");>-6 (US Central)</option>
+              <option value=246&LSetup(3,"%s",94,B,246," selected");>-5 (US Eastern)</option>
+              <option value=248&LSetup(3,"%s",94,B,248," selected");>-4 (Atlantic,
+              Caracas, La Paz)</option>
+              <option value=249&LSetup(3,"%s",94,B,249," selected");>-3:30 (Newfoundland)</option>
+              <option value=250&LSetup(3,"%s",94,B,250," selected");>-3 (Buenos
+              Aires, Brasilia)</option>
+              <option value=252&LSetup(3,"%s",94,B,252," selected");>-2 (MidAtlantic)</option>
+              <option value=254&LSetup(3,"%s",94,B,254," selected");>-1 (Azores)</option>
+              <option value=0&LSetup(3,"%s",94,B,0," selected");>0 (Greenwich,
+              London, Lisabon, Dublin)</option>
+              <option value=2&LSetup(3,"%s",94,B,2," selected");>+1 (West Europe,
+              Berlin, Paris, Rome, Madrid)</option>
+              <option value=4&LSetup(3,"%s",94,B,4," selected");>+2 (East Europe,
+              Athens, Cairo, Harare, Israel)</option>
+              <option value=6&LSetup(3,"%s",94,B,6," selected");>+3 (Moscow)</option>
+              <option value=7&LSetup(3,"%s",94,B,7," selected");>+3:30 (Tehran)</option>
+              <option value=8&LSetup(3,"%s",94,B,8," selected");>+4 (Abu Dhabi,
+              Baku, Muscat)</option>
+              <option value=10&LSetup(3,"%s",94,B,10," selected");>+5 (Karachi,
+              Islamabad, Ekaterinburg)</option>
+              <option value=11&LSetup(3,"%s",94,B,11," selected");>+5:30 (Bombay,
+              Calcutta, Madras, New Delhi)</option>
+              <option value=12&LSetup(3,"%s",94,B,12," selected");>+6 (Dhaka,
+              Almaty, Colombo)</option>
+              <option value=14&LSetup(3,"%s",94,B,14," selected");>+7 (Bangkok,
+              Hanoi, Jakarta)</option>
+              <option value=16&LSetup(3,"%s",94,B,16," selected");>+8 (Beijing,
+              Hong Kong, Singapore, Taipei, Perth)</option>
+              <option value=18&LSetup(3,"%s",94,B,18," selected");>+9 (Tokyo,
+              Osaka, Sapporo, Seoul, Yakutsk)</option>
+              <option value=19&LSetup(3,"%s",94,B,19," selected");>+9:30 (Alelaide,
+              Darwin)</option>
+              <option value=20&LSetup(3,"%s",94,B,20," selected");>+10 (Brisbane,
+              Melbourne, Sydney, Guam, Hobart)</option>
+              <option value=22&LSetup(3,"%s",94,B,22," selected");>+11 (Solomon
+              Is., Magadan, New Caledonia)</option>
+              <option value=24&LSetup(3,"%s",94,B,24," selected");>+12 (Auckland,
+              Wellington, Fiji, Kamchatka)</option>
+            </select>
+          </td>
+          <td> <font size="2" face="Arial, Helvetica, sans-serif"> hours offset to UTC </font></td>
+        </tr>
+        <tr>
+          <td> <br>
+              <input name="submit" type="submit" value=" OK ">
+              <input name="reset" type="reset" value=" Cancel ">
+          </td>
+        </tr>
+      </form>
+    </table>
+    </body>
+</html>

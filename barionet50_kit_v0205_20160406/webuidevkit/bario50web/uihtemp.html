@@ -1,0 +1,22 @@
+<html>
+<body bgcolor="#CCCCCC">
+<p><b><font face="Arial">Help<br>
+</font></b><font size="2" face="Arial"><br>
+  
+<b>Built-in temperature sensor driver</b><br>
+Enable or disable the built-in temperature sensor driver.<br>
+The Barionet firmware contains a driver to automatically poll all attached 1-wire sensors and measure the temperature. By default the driver is enabled.<br>
+In some cases though the BCL application might want to control the temperature sensors on its own. In that case, to avoid interference, the built-in driver can be disabled using this switch.<br>
+<br>
+Please note that temperature sensor addresses are still shown even if the driver is disabled.<br>
+<br>
+Default: <em>Enable</em><br><br>
+
+ 
+<b>Dallas 1-wire&reg; Temperature sensors</b><br>
+Temperature sensors can be attached to Barionet's 1-wire bus. This page shows addresses (unique IDs) of the detected temperature sensors (in the order of discovery).<br>
+Up to 50 sensors can be attached, but only the first 8 are displayed. The complete list of addresses can be retrieved from IO registers 651 to 700.<br>
+
+1-wire devices are detected at the boot-up time of the Barionet.  </font>
+</body>
+</html>

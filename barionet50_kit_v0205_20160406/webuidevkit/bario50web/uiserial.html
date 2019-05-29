@@ -1,0 +1,156 @@
+<html>&L(0,"*",2);
+  <head>
+    <style type="text/css">
+    body.lpadding {
+          padding-left: 20px;
+    }	
+    </style> 
+    <script language=JavaScript src=util.js></script>
+  </head>
+  <body class="lpadding" bgcolor=#FFFFFF link=#FFFFFF vlink=#FFFFFF leftmargin="0">
+    <font size=3 face=Arial>
+	<form action=setup.cgi method=get target=_top>
+		<table width=640 height="55" border=0 cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="middle"><font size=3><b>&nbsp;SETTINGS</td>
+			</tr>
+		</table>
+	</form>
+    <table width=720 cellpadding="0" cellspacing="0" bgcolor=#000000>
+      <tr align="center">
+        <td width=80 height=30 background="uigl.gif"><font size=1><a href="uifnetwork.html" title="NETWORK SETTINGS" target="config">NETWORK</a></td>
+        <td width=80 background="uigs.gif"><font size=1>SERIAL</td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifio.html" title="INPUT/OUTPUT SETTINGS" target="config">I/O</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifcontrol.html" title="CONTROL/INFO/DEBUG SETTINGS" target="config">CONTROL</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsnmp.html" title="SNMP SETTINGS" target="config">SNMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftime.html" title="NTP TIME SETTINGS" target="config">TIME</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftemp.html" title="1-WIRE TEMPERATUR SENSOR SETTINGS" target="config">TEMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsecurity.html" title="PASSWORD SETTINGS" target="config">SECURITY</a></td>
+        <td width="80" valign="bottom" bgcolor="#FFFFFF"><img src="uigg.gif" width="80" height="1"></td>
+      </tr>
+    </table><br>
+    <table>
+      <form action=setup.cgi method=get><input type="hidden" name=L value=uisaved.html>
+        <tr>
+          <td>&nbsp;</td>
+          <td><b><u><font size=2>RS-232</td>
+          <td><b><u><font size=2>RS-485</td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Serial speed</td>
+          <td><font size=2>
+				<select size=1 name=B16>
+					<option value=7 &LSetup(3,"%s",16,B,7,"selected");>300</option>
+					<option value=6 &LSetup(3,"%s",16,B,6,"selected");>600</option>
+					<option value=5 &LSetup(3,"%s",16,B,5,"selected");>1200</option>
+					<option value=4 &LSetup(3,"%s",16,B,4,"selected");>2400</option>
+					<option value=3 &LSetup(3,"%s",16,B,3,"selected");>4800</option>
+					<option value=2 &LSetup(3,"%s",16,B,2,"selected");>9600</option>
+					<option value=1 &LSetup(3,"%s",16,B,1,"selected");>19200</option>
+					<option value=0 &LSetup(3,"%s",16,B,0,"selected");>38400</option>
+					<option value=9 &LSetup(3,"%s",16,B,9,"selected");>57600</option>
+					<option value=11 &LSetup(3,"%s",16,B,11,"selected");>76800</option>
+					<option value=8 &LSetup(3,"%s",16,B,8,"selected");>115200</option>
+					<option value=12 &LSetup(3,"%s",16,B,12,"selected");>230400</option>
+				</select>
+        Baud</font></td>
+          <td><font size=2>
+            <select size=1 name=B32>
+					<option value=7 &LSetup(3,"%s",32,B,7,"selected");>300</option>
+					<option value=6 &LSetup(3,"%s",32,B,6,"selected");>600</option>
+					<option value=5 &LSetup(3,"%s",32,B,5,"selected");>1200</option>
+					<option value=4 &LSetup(3,"%s",32,B,4,"selected");>2400</option>
+					<option value=3 &LSetup(3,"%s",32,B,3,"selected");>4800</option>
+					<option value=2 &LSetup(3,"%s",32,B,2,"selected");>9600</option>
+					<option value=1 &LSetup(3,"%s",32,B,1,"selected");>19200</option>
+					<option value=0 &LSetup(3,"%s",32,B,0,"selected");>38400</option>
+					<option value=9 &LSetup(3,"%s",32,B,9,"selected");>57600</option>
+					<option value=11 &LSetup(3,"%s",32,B,11,"selected");>76800</option>
+					<option value=8 &LSetup(3,"%s",32,B,8,"selected");>115200</option>
+					<option value=12 &LSetup(3,"%s",32,B,12,"selected");>230400</option>
+				</select>
+        Baud</font></td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Data bits</td>
+          <td><font size=2>
+            <select size=1 name=B17b6>
+              <option value=0&LSetup(3,"%s",17,b6,0," selected");>8</option>
+              <option value=1&LSetup(3,"%s",17,b6,1," selected");>7</option>
+            </select>
+          </font></td>
+          <td><font size=2>
+            <select size=1 name=B33b6>
+              <option value=0&LSetup(3,"%s",33,b6,0," selected");>8</option>
+              <option value=1&LSetup(3,"%s",33,b6,1," selected");>7</option>
+            </select>
+          </font></td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Parity bit</td>
+          <td><font size=2>
+            <select size=1 name=B17b5>
+              <option value=0&LSetup(3,"%s",17,b5,0," selected");>Disabled</option>
+              <option value=1&LSetup(3,"%s",17,b5,1," selected");>Enabled</option>
+            </select>
+            <select size=1 name=B17b4>
+              <option value=0&LSetup(3,"%s",17,b4,0," selected");>Odd</option>
+              <option value=1&LSetup(3,"%s",17,b4,1," selected");>Even</option>
+            </select>&nbsp;
+			</font></td>
+          <td><font size=2>
+            <select size=1 name=B33b5>
+              <option value=0&LSetup(3,"%s",33,b5,0," selected");>Disabled</option>
+              <option value=1&LSetup(3,"%s",33,b5,1," selected");>Enabled</option>
+            </select>
+            <select size=1 name=B33b4>
+              <option value=0&LSetup(3,"%s",33,b4,0," selected");>Odd</option>
+              <option value=1&LSetup(3,"%s",33,b4,1," selected");>Even</option>
+            </select>
+          </font></td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Stop bits</td>
+          <td><font size=2>
+            <select size=1 name=B17b7>
+              <option value=0&LSetup(3,"%s",17,b7,0," selected");>1</option>
+              <option value=1&LSetup(3,"%s",17,b7,1," selected");>2</option>
+            </select>
+          </font></td>
+          <td><font size=2>
+            <select size=1 name=B33b7>
+              <option value=0&LSetup(3,"%s",33,b7,0," selected");>1</option>
+              <option value=1&LSetup(3,"%s",33,b7,1," selected");>2</option>
+            </select>
+          </font></td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Flow control</td>
+          <td><font size=2>
+            <select size=1 name=B17b1-2>
+              <option value=0&LSetup(3,"%s",17,b1-2,0," selected");>None</option>
+              <option value=1&LSetup(3,"%s",17,b1-2,1," selected");>Software (XON/XOFF)</option>
+              <option value=2&LSetup(3,"%s",17,b1-2,2," selected");>Hardware (RTS/CTS)</option>
+            </select>
+          </font></td>
+		  <td><font size=2>n.a.</td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Local port</td>
+          <td><input name=W18 size=5 maxlength=5 value=&LSetup(1,"%u",18,W); onChange=PortCheck(this)></td>
+          <td><input name=W34 size=5 maxlength=5 value=&LSetup(1,"%u",34,W); onChange=PortCheck(this)></td>
+        </tr>
+        <tr>
+          <td><b><font size=2>Disconnect Tout</td>
+          <td><input name=B26 size=3 maxlength=3 value=&LSetup(1,"%u",26,B); onChange=ByteCheck(this)><font size=2> seconds</td>
+          <td><input name=B42 size=3 maxlength=3 value=&LSetup(1,"%u",42,B); onChange=ByteCheck(this)><font size=2> seconds</td>
+        </tr>
+        <tr>
+          <td><br>
+            <input name="submit" type="submit" value=" OK ">
+            <input name="reset" type="reset" value=" Cancel ">
+            </tr>
+      </form>
+    </table>
+    </body>
+</html>
