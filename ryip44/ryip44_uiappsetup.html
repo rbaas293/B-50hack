@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- &L(0,"*"); -->
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<script language=JavaScript src=util.js></script>
+	<script language=JavaScript src=ryip44.js></script>
+	<style type="text/css">
+	table.bottomBorder { border-collapse:collapse; }
+	table.bottomBorder td, table.bottomBorder th { border-bottom:1px dotted black;padding:5px; }
+	.ib { width:35px; }
+	.ic { width:50px; }
+	</style>
+</head>
+<body onload="setup()">
+<font size=2 style="font-family : Arial, Verdana, Helvetica, sans-serif">
+<form name="settings" action=setup.cgi method=post>
+<input type="hidden" name=L value=uisaved.html>
+<table>
+<tr>
+	<td colspan=5><b><font size=3>APPLICATION SETUP</font></b>
+	<script>gen_table_linked_stations()</script>	
+<tr><td>&nbsp;
+<tr>
+	<td colspan=5><b><font size=3>Relay Output Functionality</font></b><br>
+<tr>
+	<td colspan=5><script>gen_table_relay_output(-1)</script>
+	<script>gen_table_relay_output(0)</script>
+	<td align="center"><select id=sel1 name=B1180 onChange="hide_config_button(1)">
+		<option value=0 &LSetup(3,"%s",1180,B,0,"selected");>Door Release: Normally-Open</option>
+		<option value=1 &LSetup(3,"%s",1180,B,1,"selected");>Door Release: Normally-Closed</option>
+		<option value=2 &LSetup(3,"%s",1180,B,2,"selected");>Active While Calling From Source</option>
+		<option value=3 &LSetup(3,"%s",1180,B,3,"selected");>Active While Communicating</option>
+		<option value=4 &LSetup(3,"%s",1180,B,4,"selected");>Active While Calling From Source And Communicating</option>
+		<script> if (systype==2) document.write('<option value=5 &LSetup(3,"%s",1180,B,5,"selected");>Active While Any Station Calling</option>'); </script>
+		</select>
+	<td align="center"><input id=bc1 type=button value=" Configure " onClick="popup_mask(0)">
+<tr>
+	<script>gen_table_relay_output(1)</script>
+	<td align="center"><select id=sel2 name=B1181 onChange="hide_config_button(2)">
+		<option value=0 &LSetup(3,"%s",1181,B,0,"selected");>Door Release: Normally-Open</option>
+		<option value=1 &LSetup(3,"%s",1181,B,1,"selected");>Door Release: Normally-Closed</option>
+		<option value=2 &LSetup(3,"%s",1181,B,2,"selected");>Active While Calling From Source</option>
+		<option value=3 &LSetup(3,"%s",1181,B,3,"selected");>Active While Communicating</option>
+		<option value=4 &LSetup(3,"%s",1181,B,4,"selected");>Active While Calling From Source And Communicating</option>
+		<script> if (systype==2) document.write('<option value=5 &LSetup(3,"%s",1181,B,5,"selected");>Active While Any Station Calling</option>'); </script>
+		</select>
+	<td align="center"><input id=bc2 type=button value=" Configure " onClick="popup_mask(1)">
+<tr>
+	<script>gen_table_relay_output(2)</script>
+	<td align="center"><select id=sel3 name=B1182 onChange="hide_config_button(3)">
+		<option value=0 &LSetup(3,"%s",1182,B,0,"selected");>Door Release: Normally-Open</option>
+		<option value=1 &LSetup(3,"%s",1182,B,1,"selected");>Door Release: Normally-Closed</option>
+		<option value=2 &LSetup(3,"%s",1182,B,2,"selected");>Active While Calling From Source</option>
+		<option value=3 &LSetup(3,"%s",1182,B,3,"selected");>Active While Communicating</option>
+		<option value=4 &LSetup(3,"%s",1182,B,4,"selected");>Active While Calling From Source And Communicating</option>
+		<script> if (systype==2) document.write('<option value=5 &LSetup(3,"%s",1182,B,5,"selected");>Active While Any Station Calling</option>'); </script>
+		</select>
+	<td align="center"><input id=bc3 type=button value=" Configure " onClick="popup_mask(2)">
+<tr>
+	<script>gen_table_relay_output(3)</script>
+	<td align="center"><select id=sel4 name=B1183 onChange="hide_config_button(4)">
+		<option value=0 &LSetup(3,"%s",1183,B,0,"selected");>Door Release: Normally-Open</option>
+		<option value=1 &LSetup(3,"%s",1183,B,1,"selected");>Door Release: Normally-Closed</option>
+		<option value=2 &LSetup(3,"%s",1183,B,2,"selected");>Active While Calling From Source</option>
+		<option value=3 &LSetup(3,"%s",1183,B,3,"selected");>Active While Communicating</option>
+		<option value=4 &LSetup(3,"%s",1183,B,4,"selected");>Active While Calling From Source And Communicating</option>
+		<script> if (systype==2) document.write('<option value=5 &LSetup(3,"%s",1183,B,5,"selected");>Active While Any Station Calling</option>'); </script>
+		</select>
+	<td align="center"><input id=bc4 type=button value=" Configure " onClick="popup_mask(3)">
+<tr>
+	<script>gen_table_remote_callin()</script>
+<tr><td>&nbsp;
+<tr>
+	<script>gen_table_ix_mobile()</script>
+<tr><td>&nbsp;
+<tr>
+	<td colspan=5>
+		<input type="button" value=" Apply Settings " onClick="submitForm()">&nbsp;&nbsp;&nbsp;
+		<input type="reset" value="Reset All" onClick="window.location.reload()">
+<tr><td>&nbsp;
+</form>
+</table>
+<body>

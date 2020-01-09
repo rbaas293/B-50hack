@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- &L(0,"*"); -->
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<script language=javascript src=ryip44_mask.js></script>
+</head>
+<body>
+<font size=2 face=Arial>
+<table><tr>
+<td bgcolor="#f2f2f2" valign="top">
+<form name="mask" action=setup.cgi method=post target="appsetup">
+<input type="hidden" name=L value=uisaved.html>
+<br><b>Allowed Stations for Output <span id='ou'></span></b><br><br>
+<script>gen_mask_table()</script>
+<br><input type="button" value=" Apply Settings " onclick='submitMask()'> <input type="button" value=" Close " onclick='window.close()'><br><br>
+</form>
+<td bgcolor="#e8e8e8" valign="top" width="35%">
+<p>
+<b>Help</b><br><br>
+This window allows you to set up a list of allowed stations for the <em>Door Release</em> function.<br><br>
+Up to 32 stations can be configured by checking or unchecking the corresponding enable flag.<br><br>
+<font color=red><b>NOTE:</b> If the <em>Linked Stations</em> list on the main page is modified, replacing existing stations' TermID's, enabled flags are always related to the same station position number (1 to 32), so they will automatically reapply to the new TermID.</font></p>
+</table>
+</body>
+</html>
