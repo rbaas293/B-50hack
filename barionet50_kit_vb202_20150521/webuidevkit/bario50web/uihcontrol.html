@@ -1,0 +1,78 @@
+<html>
+<body bgcolor="#CCCCCC">
+<p><b><font face="Arial">Help</b><br>
+<br>
+<font size=2><b><u>GENERAL</u></b><br><br>
+<b>WEB server port</b><br>
+Defines the webserver port of the device.<br>
+If set to <em>"0"</em>( invalid port ), the default HTTP port (80) is used.<br>
+Default: <em>"80"</em><br><br>
+<b>BCL Program Name</b><br>
+Enter the name (up to 8 characters without extension ".tok") of the BCL application to be started at power on or after reboot.<br>
+If left empty the default BCL application (barionet.tok) is started.<br>
+Default: <em>""</em><br><br>
+<b>Lockdown mode</b><br>
+Locks different protocol access to the device (command port, web access etc.). See manual for details. <br>
+If set to <em>"0"</em> all access is granted.<br>
+Default: <em>"0"</em><br><br>
+<b>Modbus/TCP Timeout</b><br>
+Defines the time in seconds after which a Modbus/TCP connection on port 502 will be closed due to inactivity.<br>
+Enter <em>&quot;0&quot;</em> for no timeout (default).<br>
+Enter <em>&quot;1&quot;</em> to <em>&quot;255&quot;</em> to enable the Timeout.<br><br>
+<b><u>COMMAND API</u></b><br><br>
+The Barionet 50 features a Command API, which can be accessed via UDP as well as via TCP.<br> <br>
+<b>UDP command port</b><br>
+UDP port for the command API. Value <em>"0"</em> disables the UDP command API.<br>
+Barix uses the port <em>"12301"</em> on other products.<br>
+Default: <em>"0"</em><br>
+<b><br>TCP command port</b><br>
+TCP port for the command API. Value <em>"0"</em> disables the TCP command API.<br>
+Barix uses <em>"12302"</em> on other products.<br>
+Default: <em>"0"</em><br><br>
+<b>Timeout</b><br>
+After the defined number of seconds of inactivity on the TCP command port, the Barionet 50 automatically disconnects the peer.<br>
+Enter a value <em>&quot;1&quot;</em> to <em>&quot;255&quot;</em> to enable the timeout.<br>
+Enter <em>&quot;0&quot;</em> for no timeout (default).<br><br>
+<font size=2 face="Arial"><b><u>I/O STATE INFO</u></b><br><br>
+The Barionet 50 can be configured to send I/O state change information via UDP and TCP. Cylic state reports via UDP can be configured as well.<br><br>
+<b>UDP info send to<br>
+</b>Input the 4 values of the desired destination IP address where the I/O state change information should be sent to using UDP e.g.:<br>
+<em>&quot;0.0.0.0&quot;</em> for no info<br>
+<em>&quot;192.168.0.12&quot;</em> for
+a specific UDP target<br>
+<em>&quot;192.168.0.255&quot;</em> for
+a subnet UDP broadcast<br>
+<b><br>UDP destination port<br>
+</b>Define the port to be used when sending I/O
+status change information. To enable both IP and port must be set.<br>
+<b><br>
+UDP interval<br>
+</b>Define the time interval in seconds for cyclic I/O state reports (besides I/O state change information).<br> <br>
+<b>TCP initial I/O state subscriptions</b><br>
+The device can be configured to send I/O state change information to an established TCP command socket.If selected (<em>"Local I/O"</em>), the 4 relays and 4 digital inputs of the Barionet 50 are subscribed to the state reporting. <br>
+In addition, the current state of the 4 digital inputs and 4 relays is sent when the TCP connection is established.<br>
+To avoid the initial subscription select <em>"None"</em>.<br>
+Default: <em>"Local I/O"</em><br><br>
+
+<b>TCP add I/O state subscriptions</b><br>
+Defines if a "getio" or “setio” command sent via the TCP command socket will subscribe the respective I/O for future state change messages (<em>"With getio/setio"</em>) or not (<em>"None"</em>). The subscription will be active as long the TCP command connection is established. 
+The disconnection can be forced by the host or by a timeout (see parameter TCP command port / Timeout above).<br>
+Default: <em>"None"</em><br><br>
+<b><u>SYSLOG</u></b><br><br>
+<b>Syslog Server IP Address<br>
+</b>Syslog is a well known reporting protocol using UDP port 514 and is a standard component of most UNIX systems. Freeware Syslog receivers for Windows can be found on the Internet.<br>
+Enter the 4 values of the desired Syslog Server IP address e. g.:<br>
+<em>&quot;0.0.0.0&quot;</em> for subnet broadcast of Syslog messages<br>
+<em>&quot;192.168.0.1&quot;</em> for a dedicated Syslog deamon<br>
+<br>
+<b>Syslog Debug Level</b><br>
+Enter the level of Syslog debug information e. g.:<br>
+<em>&quot;0&quot;</em> for no debug information<br>
+<em>&quot;1&quot;</em> for system debug information (default setting)<br>
+<em>&quot;2&quot; to &quot;9&quot;</em> for user defined BCL debug information<br>
+<br>
+<b>Support Mode/Flags</b><br>
+Change this value only if asked for by a Barix support technician for in depth debugging. <br>
+Default: <em>&quot;0&quot;</em> for no support debug information</font>
+</body>
+</html>

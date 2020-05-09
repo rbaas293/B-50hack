@@ -1,0 +1,79 @@
+<html>&L(0,"*",2);
+  <head>
+    <style type="text/css">
+    body.lpadding {
+          padding-left: 20px;
+    }	
+    </style> 
+    <script language=JavaScript src=util.js></script>
+  </head>
+  <body class="lpadding" bgcolor=#FFFFFF link=#FFFFFF vlink=#FFFFFF leftmargin="0">
+    <font size=3 face=Arial>
+	<form action=setup.cgi method=get target=_top>
+		<table width=640 height="55" border=0 cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="middle"><font size=3><b>&nbsp;SETTINGS</td>
+			</tr>
+		</table>
+	</form>
+    <table width=720 cellpadding="0" cellspacing="0" bgcolor=#000000>
+      <tr align="center">
+        <td width=80 height=30 background="uigs.gif"><font size=1>NETWORK</td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifserial.html" title="SERIAL PORT SETTINGS" target="config">SERIAL</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifio.html" title="INPUT/OUTPUT SETTINGS" target="config">I/O</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifcontrol.html" title="CONTROL/INFO/DEBUG SETTINGS" target="config">CONTROL</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsnmp.html" title="SNMP SETTINGS" target="config">SNMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftime.html" title="NTP TIME SETTINGS" target="config">TIME</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftemp.html" title="1-WIRE TEMPERATUR SENSOR SETTINGS" target="config">TEMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsecurity.html" title="PASSWORD SETTINGS" target="config">SECURITY</a></td>
+        <td width="80" valign="bottom" bgcolor="#FFFFFF"><img src="uigg.gif" width="80" height="1"></td>
+      </tr>
+    </table><br>
+    <table>
+      <form action=setup.cgi method=get><input type="hidden" type="text" name=L value=uisaved.html>
+      <tr>
+        <td><b><font size=2>IP Address</b></td>
+        <td><font size=2>
+        <input name=B0 size=3 maxlength=3 value=&LSetup(1,"%u",0); onChange=IPCheck(this)><b> . </b>
+        <input name=B1 size=3 maxlength=3 value=&LSetup(1,"%u",1); onChange=IPCheck(this)><b> . </b>
+        <input name=B2 size=3 maxlength=3 value=&LSetup(1,"%u",2); onChange=IPCheck(this)><b> . </b>
+        <input name=B3 size=3 maxlength=3 value=&LSetup(1,"%u",3); onChange=IPCheck(this)> (0.0.0.0 for DHCP)<br></td>
+      </tr>
+      <tr>
+        <td><b><font size=2>Netmask</b></td>
+        <td><font size=2>
+        <input name=N0 size=3 maxlength=3 value=&LSetup(2,"%u",6,0); onChange=netMaskCheck(this)><b> . </b>
+        <input name=N1 size=3 maxlength=3 value=&LSetup(2,"%u",6,1); onChange=netMaskCheck(this)><b> . </b>
+        <input name=N2 size=3 maxlength=3 value=&LSetup(2,"%u",6,2); onChange=netMaskCheck(this)><b> . </b>
+        <input name=N3B6 size=3 maxlength=3 value=&LSetup(2,"%u",6,3); onChange=netMaskCheck(this)> (0.0.0.0 = default)</td>
+      </tr>
+      <tr>
+        <td><b><font size=2>Gateway</b></td>
+        <td><font size=2>
+        <input name=B12 size=3 maxlength=3 value=&LSetup(1,"%u",12); onChange=IPCheck(this)><b> . </b>
+        <input name=B13 size=3 maxlength=3 value=&LSetup(1,"%u",13); onChange=IPCheck(this)><b> . </b>
+        <input name=B14 size=3 maxlength=3 value=&LSetup(1,"%u",14); onChange=IPCheck(this)><b> . </b>
+        <input name=B15 size=3 maxlength=3 value=&LSetup(1,"%u",15); onChange=IPCheck(this)> (0.0.0.0 for no gateway)</td>
+      </tr>
+      <tr>
+        <td><b><font size=2>DNS Server</b></td>
+        <td><font size=2>
+        <input name=B88 size=3 maxlength=3 value=&LSetup(1,"%u",88); onChange=IPCheck(this)><b> . </b>
+        <input name=B89 size=3 maxlength=3 value=&LSetup(1,"%u",89); onChange=IPCheck(this)><b> . </b>
+        <input name=B90 size=3 maxlength=3 value=&LSetup(1,"%u",90); onChange=IPCheck(this)><b> . </b>
+        <input name=B91 size=3 maxlength=3 value=&LSetup(1,"%u",91); onChange=IPCheck(this)> (0.0.0.0 for none)</td>
+      </tr>
+      <tr>
+      	<td><b><font size=2>DHCP Hostname</td>
+      	<td><font size=2><input name=S109 size=15 maxlength=15 value="&LSetup(1,"%s",109,S);"></td>
+      </tr>
+      <tr>
+        <td>
+          <br><input type="submit" value=" OK ">
+          <input type="reset" value=" Cancel ">
+        </td>
+      </tr>
+      </form>
+    </table>
+</body>
+</html>

@@ -1,0 +1,106 @@
+B202
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+Vers  Date     Who  What
+A001  22.04.09 PK - imported bugfixes from ABCL: netmask, factory defaults, DNS, stop interpreter before applying settings
+      29.05.09 PK - added o= command
+      05.06.09 PK - implemented 1-wire device address printing in dynamic marks: &LIO(3,...)
+      08.06.09 PK - supports all 1-wire temp sensors in &LIO(3,...)
+      11.06.09 PK - fixed latent memory overwrite bug in upload.cgi: on lack of MBufs return error 503
+                  - added input-triggered traps
+      12.06.09 PK - serial tunnel process is started only if the respective TCP port is configured
+                  - fixed memory overwrite bug on serial tunnel 0
+      15.06.09 PK - RS232 and RS485 LED control
+A100  16.06.09 PK - added discovery
+      22.06.09 PK - fixed bug with default program name "Barionet" if no name specified
+A101  06.08.09 PK - added number of temperature sensors as &LIO(3,"",-2);
+      27.08.09 PK - the "version" command returns "BARIONET 1.3" (bugfix #064.06)
+                  - removed commands "interval" and "info" (feature #064.09)
+		  - setio returns the current IO state (feature #064.10)
+      28.08.09 PK - fixed digital input state change detection on TCP command port (bug #064.07)
+      02.09.09 PK - command parser rewritten
+                  - UDP commands accepted with and without terminating CR (bugfix #064.11)
+      05.09.09 PK - implemented TCP subscriptions properly (bugfix #064.12)
+      11.09.09 PK - UDP info fixed (bug #064.05)
+      23.09.09 PK - setup version increased to 2 to match with the config.bin
+                  - WEB factory defaults preserve network settings (bugfix #064.16)
+      24.09.09 PK - added software flow control in serial settings (#064.20)
+      25.09.09 PK - fixed memory overwrite in setpar.c
+                  - implemented B?b?-? in setup.cgi
+      28.09.09 PK - changed reboot processing in setup.cgi, the uireboot2.html was not loaded sometimes
+                  - bugfix in setup.cgi: only 1024 bytes written to EEPROM 
+A102  06.10.09 PK - RESCUEKIT CHANGES:
+                  - bario50app renamed to bario50web in the rescuekit (both the folder as well as the COB file)
+                  - readme file modified - removed Exstreamer and other irrelevant stuff
+		  - WEBUI scripts renamed to web.bat and web.sh; added optional IP address parameter for TFTP 
+		  - defaultbcl.cob renamed to barionetbcl.cob
+		  - added version file for the default BCL program
+		  - added erase.bat, erasebcl.bat, erase.sh and erasebcl.sh into the bclkit/
+      07.10.09 PK - bug #064.23 fixed: broadcast does not work if static IP is used
+      08.10.09 PK - printf %V in BCL corrected to show the version in the right format
+                  - added dynamic marks &LState from ABCL - for version information printing
+      12.10.09 PK - workaround for bug #064.28: DTS is always 0
+      16.10.09 PK - bugfix #064.31: improper setting on the second serial (did not work as 485)
+<==== 16.10.09 PK Version B1.02 Frozen and released ===>      
+A103  19.10.09 PK - correction in Linux README: folder: update_rescue -> update_rescue/linux
+                  - added README for Mac
+      20.10.09 PK - bugfix #064.32: wrong answer to setio
+<==== 20.10.09 PK Version B1.03 Frozen and released ===>      
+A104  14.12.09 PK - fixed typo in erasefree.bat (bug #064.36)
+      17.12.09 PK - bugfix #064.44: Sometimes shows statechange of an IO>1000 on TCP
+                  - bugfix #064.35: TCP subscriptions - no statechange message if UDP cmd received
+      18.12.09 PK - bugfix #064.37: No response to a TCP/Modbus command
+                  - feature #064.42: bpkg and tokenizer tools for MAC and Linux
+		  - feature #064.45: rescue files in the kit renamed
+<==== 18.12.09 PK Version B1.04 Frozen and released ===>      
+A105  11.01.10 PK - bugfix #064.48: WEB Factory Defaults clear the DHCP name
+      12.01.10 PK - bugfix #064.47: if TCP command port Disconnect Timeout is odd network does not work
+                  - bugfix #064.50: the WEB server does not send content-length any more, the information was wrong anyway
+      14.01.10 PK - bugfix #064.34: 1-wire RTC is detected but does not read the time
+<==== 20.01.10 PK Version B1.05 Frozen and released ===>      
+A106  03.02.10 PK - new feature #064.29: WEB authentication
+                  - fixed wrong HTTP error code if file not found: 400 -> 404
+                  - 12 character password didn't work, fixed
+      04.02.10 PK - #064.43: fixed non-working parity settings on the serial port
+<==== 04.02.10 PK Version B1.06 Frozen and released ===>      
+A107  11.03.10 PK - Setup version increased from 02 to 03
+<==== 11.03.10 PK Version B1.07 Frozen and released ===>      
+A108  22.03.10 PK - corrected non-working config.bin defaults
+<==== 22.03.10 PK Version B1.08 Frozen and released ===>      
+<==== 14.05.10 PK Version B109 Frozen and released ===>
+A110  02.11.10 PK - default BCL application changed from "io_tunnel" to "serial_io_tunnel"
+      10.11.10 PK - #64.22: programmable 1-wire interface
+      18.11.10 PK - #64.58: add LF and binary zero as UDP command terminator
+<==== 19.11.10 PK Version B110 Frozen and released ===>
+A111  03.12.10 PK - #64.64: removed exclusive login and timeout from web authentication
+A200  07.12.10 PK - increased to version 2.0 to distingush the BCL 1.5 interpreter upgrade
+<==== 07.12.10 PK Version B200 Frozen and released ===>
+
+
+A201 24.11.11 JP  - #64.72: Check for password before executing command on rc.cgi interface.
+                            ask user to provide password if its set.
+                  - #64.73: Wrong system up reply message was being sent to SNMP ineterface.
+                  - #64.69: A check for ethernet link is up added. It will wait maximum 2 seconds for ethernet link to be up.
+                  - #64.74: 1-wire sensors returns wrong value in case of negative temperature. This problem is fixed in BCL IO.
+                  - #64.68: Writing to 1-wire registers(601-650) was not allowed. Fixed in BCL IO.
+                  - #64.67: Blank page instead of "not authorised" in a wrong attempt to change password.
+                  - #64.25: WEB server port - inconsistence in the factory defaults and the help. 
+                            -> made fix in setup_initialization() function and also improved the help text. 
+<==== 30.11.11 JP Version B201 Frozen and released ===>
+A202  15.12.12 AD - added HTTP POST support.
+      22.01.13 AD - added support to apply defaults as config.bin(500B) and appconfig.bin(1000B).
+      24.07.14 PK - disabled reset button to save space
+                  - tucomm optimization to save space
+      17.11.14 KS - #64.81: main.c: fixed error in #64.69 while loop 
+      17.11.14 KS - tunnel.c: about L:200 corrected UTC optimization
+      18.11.14 KS - ../bcl bario.mac.sh bpkg spelling corrected, bario.sh updated for windows 
+      09.12.14 KS - #64.84 mbcomm: test for CLOSED and DRAIN added during TCPOpen
+      09.12.14 KS - #64.84 tucomm: test for CLOSED and DRAIN added during TCPOpen
+<==== 09.12.14 KS Version A202 Test Release created for customer test ===>
+B202  05.05.15 KS - dist/bcl.bat corrected for iotunnel, dist/linux/readme_end edited
+      13.05.15 KS - Makefile.nrec: DEFAULT_APP modified to use iosertun (serial & IO) bcl app
+      19.05.15 KS - #64.78 & #64.90 distfiles/bcl.bat reverted to serial_io_tunnel and barionet.bas
+      21.05.15 KS - #64.78 & #64.90 setpar.c new method 4 added for @name selection
+      21.05.15 KS - #64.78 & #64.90 Makefile.nrec refressed to re-use bcl app: serial_and_io_tunnel
+<==== 21.05.15 KS Version B202 Frozen and released ===>
+             
+*/

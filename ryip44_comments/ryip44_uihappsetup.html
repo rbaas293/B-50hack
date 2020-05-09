@@ -1,0 +1,112 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<script language=JavaScript src=ryip44.js></script>
+</head>
+<body>
+<font size=2 face=Arial>
+<b>HELP</b><br><br>
+<script> 
+	if (systype == 1) {
+		document.write('<hr size=1 width=100%>');
+		document.write('<b>Linked Stations</b><br><hr size=1 width=100%><br>');
+		document.write('<b>Linked Stations Table</b><br>');
+		document.write('This table is used to set up a list of stations that can be <em>"allowed"</em> to access the <em>Door Release - ...</em> feature. If inserted here, stations can be made <em>allowed</em> for each relay output, using the "Configure" input button in the <em>Relay Functionality</em> section below.<br>');
+		document.write('[Default: all entries as 0.0.0.0 : 00-000]<br><br>');
+	}
+</script>
+<hr size=1 width=100%>
+<b>Relay Output Functionality</b><br>
+<hr size=1 width=100%><br>
+<b>Relay</b><br>
+Each relay can be configured to be used for a specific function.<br><br>
+<script>
+	switch (systype) {
+		case 0:
+			document.write('<b>Station Number</b><br>');
+			document.write('If the correspondent relay is set as <em>Door Release - ...</em>, this field is used to determine if the door release instruction should be accepted or ignored. If the assigned Station Number matches the SIF event destination, the contact is changed.<br>');
+			document.write('If the correspondent relay is set as <em>Active while ...</em>, this field is used to determine if the external signalling event should be accepted or ignored. If the assigned Station Number matches the SIF event source or destination, the contact is closed.<br>');
+			document.write('[Default: 0]');
+			document.write('<br><br>');
+			document.write('<b>Relay Action</b><br>');
+			document.write('<em>Door Release - Normally-Open</em>: Relay is activated if the incoming destination Station Number matches the assigned Station Number. On activation the contact is closed.<br>');
+			document.write('<em>Door Release - Normally-Closed</em>: Relay is activated if the incoming destination Station Number matches the assigned Station Number. On activation the contact is opened.<br>');
+			document.write('<em>Active While Calling From Source</em>: Relay is activated in the case of a <em>Begin Call</em> external signalling instruction, where the source Station Number matches the assigned Station Number. On activation the contact is closed.<br>');
+			document.write('<em>Active While Communicating</em>: Relay is activated in the case of a <em>Begin Communication</em> external signalling instruction, where either the source or destination Station Number matches the assigned Station Number. On activation the contact is closed.<br>');
+			document.write('<em>Active While Calling From Source And Communicating</em>: Relay is activated in the case of either a <em>Begin Call</em> or <em>Begin Communication</em> external signalling instruction, where the source (for <em>Begin Call</em>) or the source or destination (for <em>Begin Communication</em>) Station Number matches the assigned Station Number. On activation the contact is closed.<br>');
+			document.write('[Default: Door Release - Normally-Open]');
+			break;
+		case 1:
+			document.write('<b>TermID</b><br>');
+			document.write('If the correspondent relay is set as <em>Door Release - ...</em>, this field is used to determine if the door release instruction should be accepted or ignored. If the assigned door TermID matches the SIF event destination, the contact is changed.<br>');
+			document.write('If the correspondent relay is set as <em>Active while ...</em>, this field is used to determine if the external signalling event should be accepted or ignored. If the assigned door TermID matches the SIF event source or destination, the contact is closed.<br>');
+			document.write('[Default: 00-000]');
+			document.write('<br><br>');
+			document.write('<b>Relay Action</b><br>');
+			document.write('<em>Door Release - Normally-Open</em>: Relay is activated if the incoming destination TermID matches the <em>Assigned</em> door TermID, and the source TermID matches an <em>Allowed</em> master station. On activation the contact is closed.<br>');
+			document.write('<em>Door Release - Normally-Closed</em>: Relay is activated if the incoming destination TermID matches the <em>Assigned</em> door TermID, and the source TermID matches an <em>Allowed</em> master station. On activation the contact is opened.<br>');
+			document.write('<em>Active While Calling From Source</em>: Relay is activated in the case of a <em>Begin Call</em> external signalling instruction, where the source TermID matches the assigned door TermID. On activation the contact is closed.<br>');
+			document.write('<em>Active While Communicating</em>: Relay is activated in the case of a <em>Begin Communication</em> external signalling instruction, where either the source or destination TermID matches the assigned door TermID. On activation the contact is closed.<br>');
+			document.write('<em>Active While Calling From Source And Communicating</em>: Relay is activated in the case of either a <em>Begin Call</em> or <em>Begin Communication</em> external signalling instruction, where the source (for <em>Begin Call</em>) or the source or destination (for <em>Begin Communication</em>) TermID matches the assigned door TermID. On activation the contact is closed.<br>');
+			document.write('[Default: Door Release - Normally-Open]');
+			document.write('<br><br>');
+			document.write('<b>Configure</b><br>');
+			document.write('The <em>Configure</em> button is used to set up the <em>Allowed</em> master station list when <em>Door Release - ...</em> is configured as a relay action.');
+			break;
+		case 2:
+			document.write('<b>Station ID</b><br>');
+			document.write('If the correspondent relay is set as <em>Door Release - ...</em>, this field is used to determine if the door release instruction should be accepted or ignored. If the assigned Station ID matches the destination, the contact is changed.<br>');
+			document.write('If the correspondent relay is set as <em>Active while ...</em>, this field is used to determine if the external signalling event should be accepted or ignored. If the assigned Station ID matches the event source or destination, the contact is closed.<br>');
+			document.write('[Default: 0]');
+			document.write('<br><br>');
+			document.write('<b>Relay Action</b><br>');
+			document.write('<em>Door Release - Normally-Open</em></b>: Relay is activated if the incoming destination Station ID matches the assigned Station ID. On activation the contact is closed.<br>');
+			document.write('<em>Door Release - Normally-Closed</em>: Relay is activated if the incoming destination Station ID matches the assigned Station ID. On activation the contact is opened.<br>');
+			document.write('<em>Active While Calling From Source</em>: Relay is activated in the case of a <em>Calling</em> external signalling instruction, where the source Station ID matches the assigned Station ID. On activation the contact is closed.<br>');
+			document.write('<em>Active While Communicating</em>: Relay is activated in the case of a <em>Communicating</em> external signalling instruction, where the source Station ID matches the assigned Station ID. On activation the contact is closed.<br>');
+			document.write('<em>Active While Calling From Source And Communicating</em>: Relay is activated in the case of either a <em>Calling or Communicating</em> external signalling instruction, where the source Station ID matches the assigned Station ID. On activation the contact is closed.<br>');
+			document.write('<em>Active While Any Station Calling</em>: Relay is activated in the case of any <em>Calling</em> external signalling instruction. On activation the contact is closed.<br>');
+			document.write('[Default: Door Release - Normally-Open]');
+			break;
+	}
+</script>
+<br><br>
+<script>
+	if (systype != 2) {
+		document.write('<hr size=1 width=100%>');
+		document.write('<b>Remote Call-In</b><br>');
+		document.write('<hr size=1 width=100%><br>');
+		document.write('<b>Relay</b><br>');
+		document.write('Each relay input can be configured to start a <em>Remote Call-In</em>.<br><br>');
+		document.write('<b>Priority</b><br>');
+		document.write('Set the priority of the call.<br>');
+		document.write('[Default: Normal]');
+		document.write('<br><br>');
+		document.write('<b>Target IP</b><br>');
+		document.write("Set the target ");
+		if (systype == 1) document.write('door ');
+		document.write("station's IP address.<br>");
+		document.write('[Default: 0.0.0.0]');
+		document.write('<br><br>');
+		document.write('<b>Setup</b><br>');
+		if (systype == 0) {
+			document.write('Set the list of Station Numbers to be called from the target.<br><br>');
+			document.write('<hr size=1 width=100%>');
+			document.write('<b>IX Mobile Server Functionality</b><br>');
+			document.write('<hr size=1 width=100%><br>');
+			document.write('<b>IX Mobile Server Table</b><br>');
+			document.write('This table is used to set up a list of the IP Addresses of up to 8 devices with the IX Mobile app that the RY-IP44 can act as the server for.<br>');
+			document.write('[Default: all entries as 0.0.0.0]<br><br>');
+		}
+		if (systype == 1) document.write("Set the list of master TermID's to be called from the target door.<br><br>");
+	}
+</script>
+<hr size=1 width=100%>
+<b>Commands</b><br>
+<hr size=1 width=100%><br>
+<b>Apply Settings</b><br>
+Click to save all settings in non-volatile memory.<br>
+<b>Note:</b> Device must reboot to use the newly applied values. Click the <em>reboot</em> link after <em>apply</em>.<br><br>
+<b>Reset All</b><br>
+Click to remove to any altered, unsaved settings. Page will reload and all changes will be lost.<br><br>
+</html>

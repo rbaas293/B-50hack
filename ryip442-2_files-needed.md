@@ -16,7 +16,9 @@
 | ryip44_uihappsetup.html | 7234***                |
 | ryip44_uimask.html      | 7349***                |
 
+1901 has info about imx login stuff. this is where the `airephone` tab comes from
 
+I really need to have from 10000h and forward
 
 
 # Info about token file ripped from ryip44v2-2.bin

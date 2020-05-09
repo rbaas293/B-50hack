@@ -1,0 +1,149 @@
+<html>&L(0,"*",2);
+  <head>
+  <style type="text/css">
+    body.lpadding {
+          padding-left: 20px;
+}	
+</style>
+    <script language=JavaScript src=util.js></script>
+  </head>
+  <body class="lpadding" bgcolor=#FFFFFF link=#FFFFFF vlink=#FFFFFF leftmargin="0">
+    <font size=3 face=Arial>
+	<form action=setup.cgi method=get target=_top>
+		<table width=640 height="55" border=0 cellpadding="0" cellspacing="0">
+			<tr>
+				<td valign="middle"><font size=3><b>&nbsp;SETTINGS</td>
+			</tr>
+		</table>
+	</form>
+    <table width=720 cellpadding="0" cellspacing="0" bgcolor=#000000>
+      <tr align="center">
+        <td width=80 height=30 background="uigl.gif"><font size=1><a href="uifnetwork.html" title="NETWORK SETTINGS" target="config">NETWORK</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifserial.html" title="SERIAL SETTINGS" target="config">SERIAL</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifio.html" title="INPUT/OUTPUT SETTINGS" target="config">I/O</a></td>
+        <td width=80 background="uigs.gif"><font size=1>CONTROL</td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsnmp.html" title="SNMP SETTINGS" target="config">SNMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftime.html" title="NTP TIME SETTINGS" target="config">TIME</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uiftemp.html" title="1-WIRE TEMPERATUR SENSOR SETTINGS" target="config">TEMP</a></td>
+        <td width=80 background="uigl.gif"><font size=1><a href="uifsecurity.html" title="PASSWORD SETTINGS" target="config">SECURITY</a></td>
+        <td width="80" valign="bottom" bgcolor="#FFFFFF"><img src="uigg.gif" width="80" height="1"></td>
+      </tr>
+    </table><br>
+	<table>
+      <form action=setup.cgi method=get><input type="hidden" type="text" name=L value=uisaved.html>
+	  <tr>
+      	<td colspan="2">
+      	<font size="2"><u><b>GENERAL<b></u></td>
+      </tr>
+      <tr>
+        <td><b><font size=2>WEB server port</td>
+        <td><input name=W8 size=5 maxlength=5 value=&LSetup(1,"%u",8,W); onChange=PortCheck(this)></td>
+      </tr>
+       <tr>
+        <td><b><font size=2>BCL Program Name</td>
+        <td>
+          <input name=S100 size=8 maxlength=8 value=&LSetup(1,"%s",100,S); ></td>
+	</tr>
+      <tr>
+        <td><b><font size=2>Lockdown mode</td>
+        <td>
+          <input name=W10 size=5 maxlength=5 value=&LSetup(1,"%u",10,W); onChange=PortCheck(this)></td>
+        </tr>
+	<tr>
+        <td><b><font size=2>Modbus/TCP timeout</td>
+        <td>
+          <input name=B97 size=3 maxlength=3 value=&LSetup(1,"%u",97,B); onChange=ByteCheck(this)> <font size=2> seconds</td>
+      </tr>
+	<tr>
+		<td colspan="2"><br><font size="2"><u><b>COMMAND API</b></u>
+      <tr>
+        <td><b><font size=2>UDP command port</td>
+        <td>
+          <input name=W56 size=5 maxlength=5 value=&LSetup(1,"%u",56,W); onChange=PortCheck(this)></td>
+        </tr>
+      <tr>
+        <td><b><font size=2>TCP command port</td>
+        <td>
+          <input name=W62 size=5 maxlength=5 value=&LSetup(1,"%u",62,W); onChange=PortCheck(this)>
+        <b><font size=2> &nbsp Timeout
+          <input name=B96 size=3 maxlength=3 value=&LSetup(1,"%u",96,B); onChange=ByteCheck(this)>
+        </b><font size=2> seconds</td>
+      </tr>
+	<tr>
+		<td colspan="2"><br><font size="2"><u><b>I/O STATE INFO</b></u>
+      <tr>
+        <td><b><font size=2>UDP info send to</td>
+        <td><font size=2>
+        <input name=B52 size=3 maxlength=3 value=&LSetup(1,"%u",52); onChange=IPCheck(this)><b> . </b>
+        <input name=B53 size=3 maxlength=3 value=&LSetup(1,"%u",53); onChange=IPCheck(this)><b> . </b>
+        <input name=B54 size=3 maxlength=3 value=&LSetup(1,"%u",54); onChange=IPCheck(this)><b> . </b>
+        <input name=B55 size=3 maxlength=3 value=&LSetup(1,"%u",55); onChange=IPCheck(this)> (0.0.0.0 for no info)</font></td>
+      </tr>
+      <tr>
+        <td><b><font size=2>UDP destination port&nbsp;</td>
+        <td colspan="3">
+          <input name=W58 size=5 maxlength=5 value=&LSetup(1,"%u",58,W); onChange=PortCheck(this)></td>
+        </tr>
+      <tr>
+        <td><font size=2><b>UDP interval</b></td>
+        <td colspan="3">
+          <input name=W60 size=5 maxlength=5 value=&LSetup(1,"%u",60,W); onChange=PortCheck(this)>
+	  <font size=2> seconds</td>
+		</tr>
+      <tr>
+        <td><b><font size=2>TCP initial I/O state subscriptions</td>
+        <td>
+           <select size=1 name=B71b0>
+                  <option value=1&LSetup(3,"%s",71,b0,1," selected");>None</option>
+                  <option value=0&LSetup(3,"%s",71,b0,0," selected");>Local I/O</option>
+                </select>
+        </td>
+      </tr>
+      <tr>
+        <td><b><font size=2>TCP add I/O state subscriptions</td>
+        <td>
+           <select size=1 name=B71b1>
+                  <option value=1&LSetup(3,"%s",71,b1,1," selected");>With getio/setio</option>
+                  <option value=0&LSetup(3,"%s",71,b1,0," selected");>None</option>
+                </select></td>
+      </tr>
+	<tr>
+		<td colspan="2"><br><font size="2"><u><b>SYSLOG</b></u>
+      <tr>
+        <td><b><font size=2>Syslog Server</td>
+        <td><font size=2>
+        <input name=B80 size=3 maxlength=3 value=&LSetup(1,"%u",80); onChange=IPCheck(this)><b> . </b>
+        <input name=B81 size=3 maxlength=3 value=&LSetup(1,"%u",81); onChange=IPCheck(this)><b> . </b>
+        <input name=B82 size=3 maxlength=3 value=&LSetup(1,"%u",82); onChange=IPCheck(this)><b> . </b>
+        <input name=B83 size=3 maxlength=3 value=&LSetup(1,"%u",83); onChange=IPCheck(this)></td>
+      </tr>
+
+      <tr>
+        <td><b><font size=2>Syslog Debug Level</td>
+        <td><font size=2>
+         <select size=1 name=B92>
+           <option value=0;&LSetup(3,"%s",92,B,0," selected");>0</option>
+           <option value=1;&LSetup(3,"%s",92,B,1," selected");>1</option>
+           <option value=2;&LSetup(3,"%s",92,B,2," selected");>2</option>
+           <option value=3;&LSetup(3,"%s",92,B,3," selected");>3</option>
+           <option value=4;&LSetup(3,"%s",92,B,4," selected");>4</option>
+           <option value=5;&LSetup(3,"%s",92,B,5," selected");>5</option>
+           <option value=6;&LSetup(3,"%s",92,B,6," selected");>6</option>
+           <option value=7;&LSetup(3,"%s",92,B,7," selected");>7</option>
+           <option value=8;&LSetup(3,"%s",92,B,8," selected");>8</option>
+           <option value=9;&LSetup(3,"%s",92,B,9," selected");>9</option>
+         </select>
+         &nbsp<b> Flags </b><input name=B93 size=3 maxlength=3 value=&LSetup(1,"%u",93); >
+        </td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+	  <tr>
+        <td>
+          <input type="submit" value=" OK ">
+          <input type="reset" value=" Cancel ">
+       </td>
+      </tr>
+      </form>
+    </table>
+</body>
+</html>
