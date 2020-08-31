@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- &L(0,"*"); -->
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<script language=javascript src=ryip44_dest.js></script>
+</head>
+<body>
+<font size=2 face=Arial>
+<table><tr>
+<td bgcolor="#f2f2f2" valign="top">
+<form name="mask" action=setup.cgi method=post target="appsetup">
+<input type="hidden" name=L value=uisaved.html>
+<br><b>Destinations for Remote Call-In
+<br>Input <span id='inp'></span></b><br><br>
+<script>gen_dest_table()</script>
+<br><input type="button" value=" Apply Settings " onclick='submitDestTable()'> <input type="button" value=" Close " onclick='window.close()'><br><br>
+</form>
+<td bgcolor="#e8e8e8" valign="top" width="35%">
+<p>
+<b>Help</b><br><br>
+This window allows the setup of the currently selected input's <em>Remote Call-In</em> destination table.<br><br>
+<b>IX:</b> Up to 20 stations (<em>or</em> 1 group if Target IP is a master station) can be configured by entering the stations' Station Numbers (or a Group Number).<br><br>
+<b>IS:</b> Up to 20 stations, including 1 remote site, can be configured by entering the stations' TermID's.<br><br>
+An additional <em>enable/disable</em> option is available for each station so they can be enabled or disabled individually.<br><br>
+Note: A disabled or blank TermID/Station Number is not added to the SetURI string.<br>
+
+</p>
+</table>
+</body>
+</html>

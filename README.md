@@ -3,6 +3,21 @@ if you know you know
 
 and so you can know even more...
 
+## Compile/tokenize Script
+### Name
+`make_ryip44.ps1`
+### Usage
+`.\make_ryip44.ps1 [-PatchName <PatchName>] [-Name <application-name>]`[-f | -Force]`
+
+#### Parameters
+
+* `PatchName <PatchName>` 
+  * Name of patch you are creating, will output to directory `patches/<PatchName>`
+* `Name <application-name>`
+  * Name of application directory.
+* `Force`
+  * Switch to force overwrite of an existing patch.
+
 ## Compiling/Tokenizing Guide
 
 All of the files of the application must be contained in a directory with the exact name as your `application.bas`. For example if your application is `application.bas`, your directory must be named `application`.
@@ -27,6 +42,9 @@ To be recognized and upload to the barionet50, all application files must be com
 
 Also, it is required that `mimetype.ini` be in the directory `web2cob` is called from. 
 
+##### Notes:
+
+```
 262FAh
 
 
@@ -46,3 +64,4 @@ size: 25f49
 end (patch_comments): 53D0Dh
 
 size (new_comments) =260ACh
+```

@@ -30,35 +30,35 @@ syslog "Station IP: "+sprintf$("%A",1)
 syslog "markers: (i) info, (w) warning, (e) error, (-) debug"
 
 dim nul$
-'def
-'def
-'def
+#define sysi #1 syslog "(i) "+#1
+#define sysw #1 syslog "(w) "+#1
+#define syse #1 syslog "(e) "+#1
 ' DEBUG
-'def
+#define sysd #1 syslog "(-) "+#1
 ' else
-' #define  syslog "(-) "+ nul$=#1
+' #define sysd nul$=#1
 
-'def
-'def
+#define BARIONET_50_AIPHONE   47 '(0x2f)
+#define TEST_VERSION 0
 dim htype
 htype=iostate(60000)
-if and(htype<>47 ,0=0) then
-	 syslog "(e) "+ "incorrect hardware type, htype= "+ str$(htype)
-'	end
+if and(htype<>BARIONET_50_AIPHONE,TEST_VERSION=0) then
+	syse "incorrect hardware type, exiting"
+	end
 endif
 
-'def
-'def
+#define MAINLOOPIPW		 1000
+#define MAINLOOP         1999
 
-'def
-'def
-'def
-'def
-'def
-'def
-'def
-'def
-'def
+#define H_TCP_SIF        0
+#define H_UDP_SIF		 0
+#define H_TCP_APP		 3
+#define H_TCP_CALLIN     1
+#define H_STP            9
+#define PORT_DEFAULT_SIF 10000
+#define PORT_DEFAULT_UDP 1724
+#define PORT_DEFAULT_APP 5061
+#define LEN_TCP_EVT      328
 
 dim _Min$(1400)
 dim _Msm$(1400)
@@ -142,30 +142,30 @@ on timer4 gosub 400
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'get general settings: system type, udp/sif port, username and password, app port
-open "STP:500" as 9 : read 9, stp$ : close 9
+open "STP:500" as H_STP : read H_STP, stp$ : close H_STP
 
 ' get system type
 systype=midget(stp$,1,1)
-if systype=0 then  syslog "(i) "+ "Aiphone system type is IX"
-if systype=1 then  syslog "(i) "+ "Aiphone system type is IS"
-if systype=2 then  syslog "(i) "+ "Aiphone system type is IPW-1A"
+if systype=0 then sysi "Aiphone system type is IX"
+if systype=1 then sysi "Aiphone system type is IS"
+if systype=2 then sysi "Aiphone system type is IPW-1A"
 
 'get upd port for IPW-1A
 if systype = 2 then
 	port_udp = midget(stp$,4,2)
-	if port_udp=0 then port_udp=1724
+	if port_udp=0 then port_udp=PORT_DEFAULT_UDP
 endif
 if systype = 2 then goto 10
 
 ' get sif port for IS,IX
 port_sif = midget(stp$,2,2)
-if port_sif=0 then port_sif=10000
+if port_sif=0 then port_sif=PORT_DEFAULT_SIF
 
 ' get username and password for IS
 if systype = 1 then
 	username$=mid$(stp$,6,16)
 	if username$="" then username$="aiphone"
-	open "STP:810" as 9 : read 9, stp$ : close 9
+	open "STP:810" as H_STP : read H_STP, stp$ : close H_STP
 	password$=mid$(stp$,1,16) 
 	if password$="" then password$="aiphone"
 endif
@@ -174,13 +174,13 @@ endif
 if systype = 0 then
 	username$=mid$(stp$,6,32)
 	if username$="" then username$="admin"
-	open "STP:800" as 9 : read 9, stp$ : close 9
+	open "STP:800" as H_STP : read H_STP, stp$ : close H_STP
 	password$=mid$(stp$,10,32) 
 	if password$="" then password$="admin"
 	
 	'get app server port for IX
 	port_app = midget(stp$,2,2)
-	if port_app = 0 then port_app=5061
+	if port_app = 0 then port_app=PORT_DEFAULT_APP
 endif
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -197,7 +197,7 @@ endif
 if systype = 0 then
 	dim srcnumber$,dstnumber$,relay_a$
 	
-	open "STP:500" as 9 : read 9, stp$ : close 9
+	open "STP:500" as H_STP : read H_STP, stp$ : close H_STP
 	' - get IX Mobile app IP addresses
 	dim ipapp(8)
 	for i=0 to 7
@@ -209,7 +209,7 @@ if systype = 1 then
 	dim srclid,dstlid(20)
 	dim srcsid,dstsid(20)
 	
-	open "STP:500" as 9 : read 9, stp$ : close 9
+	open "STP:500" as H_STP : read H_STP, stp$ : close H_STP
 
 	' - linked stations -
 	dim ipls(32)
@@ -222,14 +222,14 @@ if systype = 1 then
 	next i
 
 	' get 32 linked station termids
-	open "STP:860" as 9 : read 9, stp$ : close 9	
+	open "STP:860" as H_STP : read H_STP, stp$ : close H_STP	
 	for i=0 to 31	
 		lids(i) = midget(stp$,1+i,1)
 		sids(i) = midget(stp$,81+(i*2),2)	
 	next i
 
 	for i=0 to 31
-		 syslog "(-) "+ sprintf$("%02d: ",i+1) + sprintf$("%lA",ipls(i)) + "  " + &
+		sysd sprintf$("%02d: ",i+1) + sprintf$("%lA",ipls(i)) + "  " + &
 			sprintf$("%02d-",lids(i)) + sprintf$("%03d",sids(i))
 	next i
 endif
@@ -237,7 +237,7 @@ endif
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'Relay Output Settings: action type, local/system ids and digits, get mask for IS, IX, and IPW
 10
-open "STP:1180" as 9 : read 9, stp$ : close 9
+open "STP:1180" as H_STP : read H_STP, stp$ : close H_STP
 
 ' ~Relay Output Functionality in ryip44_uiappsetup.html
 relay_cfg(0)=midget(stp$,1,1)
@@ -247,13 +247,13 @@ relay_cfg(3)=midget(stp$,4,1)
 
 ' reset all relays, check if some are normally closed
 for x = 0 to 3
-	if relay_cfg(x)=1 then ioctl x+1,1 else ioctl x+1,0
+	if relay_cfg(x)>=1 then ioctl x+1,1 else ioctl x+1,0 ' 20200501 changed to support NC active while calling and comunicating
 next x
 
- syslog "(-) "+ "relay_cfg(0): "+str$(relay_cfg(0))
- syslog "(-) "+ "relay_cfg(1): "+str$(relay_cfg(1))
- syslog "(-) "+ "relay_cfg(2): "+str$(relay_cfg(2))
- syslog "(-) "+ "relay_cfg(3): "+str$(relay_cfg(3))
+sysd "relay_cfg(0): "+str$(relay_cfg(0))
+sysd "relay_cfg(1): "+str$(relay_cfg(1))
+sysd "relay_cfg(2): "+str$(relay_cfg(2))
+sysd "relay_cfg(3): "+str$(relay_cfg(3))
 
 ' get relay "enabling" door station termid ~lidr, sidr, digr in ryip44.js
 dim relay_statn$, diff
@@ -272,9 +272,9 @@ for i=0 to 3
 		endif
 		relay_astat$=relay_astat$+relay_statn$
 	endif
-	if systype = 1 then  syslog "(-) "+ "relay_term-id("+str$(i)+"): "+sprintf$("%02d-",relay_alid(i))+sprintf$("%03d",relay_asid(i))
-	if systype = 0 then  syslog "(-) "+ "relay_statnum("+str$(i)+"): "+relay_statn$
-	if systype = 2 then  syslog "(-) "+ "relay_station_id("+str$(i)+"): "+sprintf$("%05d",relay_alid(i)*1000+relay_asid(i))
+	if systype = 1 then sysd "relay_term-id("+str$(i)+"): "+sprintf$("%02d-",relay_alid(i))+sprintf$("%03d",relay_asid(i))
+	if systype = 0 then sysd "relay_statnum("+str$(i)+"): "+relay_statn$
+	if systype = 2 then sysd "relay_station_id("+str$(i)+"): "+sprintf$("%05d",relay_alid(i)*1000+relay_asid(i))
 next i
 
 if systype = 2 then goto 20
@@ -310,7 +310,7 @@ tmp$="GET /SetURI.cgi?ID="+username$+"&PW="+password$
 seturi0$=tmp$ : seturi1$=tmp$ : seturi2$=tmp$ : seturi3$=tmp$
 
 ' get IX relay input digits
-open "STP:720" as 9 : read 9, stp$ : close 9
+open "STP:720" as H_STP : read H_STP, stp$ : close H_STP
 if systype = 0 then
 	dim dig(80),stat0$,stat1$,stat2$,stat3$
 	'read digits for URI string below to create station numbers, ~ryip44_dest.js 1350-1429
@@ -324,19 +324,19 @@ endif
 	
 ' Masks added to enable/disable a remote uri for IS,IX
 ' without deleting and re-inserting it ~d_msk in ryip44_dest.js
-open "STP:700" as 9 : read 9, stp$ : close 9
+open "STP:700" as H_STP : read H_STP, stp$ : close H_STP
 dest_enable_masks(0)=midget(stp$,1,4)
 dest_enable_masks(1)=midget(stp$,5,4)
 dest_enable_masks(2)=midget(stp$,9,4)
 dest_enable_masks(3)=midget(stp$,13,4)
 
- syslog "(-) "+ "uri_dest_enable_masks(0): "+sprintf$("%05d",dest_enable_masks(0))
- syslog "(-) "+ "uri_dest_enable_masks(1): "+sprintf$("%05d",dest_enable_masks(1))
- syslog "(-) "+ "uri_dest_enable_masks(2): "+sprintf$("%05d",dest_enable_masks(2))
- syslog "(-) "+ "uri_dest_enable_masks(3): "+sprintf$("%05d",dest_enable_masks(3))
+sysd "uri_dest_enable_masks(0): "+sprintf$("%05d",dest_enable_masks(0))
+sysd "uri_dest_enable_masks(1): "+sprintf$("%05d",dest_enable_masks(1))
+sysd "uri_dest_enable_masks(2): "+sprintf$("%05d",dest_enable_masks(2))
+sysd "uri_dest_enable_masks(3): "+sprintf$("%05d",dest_enable_masks(3))
 
 ' Create complete setUri string
-open "STP:1240" as 9 : read 9, stp$ : close 9
+open "STP:1240" as H_STP : read H_STP, stp$ : close H_STP
 dim blank(4)
 for i = 0 to 19
 	' enable mask bit
@@ -431,44 +431,44 @@ for i = 0 to 19
 	endif
 next i
 
-seturi0$=seturi0$+http$ :  syslog "(-) "+ "seturi0$: "+seturi0$
-seturi1$=seturi1$+http$ :  syslog "(-) "+ "seturi1$: "+seturi1$
-seturi2$=seturi2$+http$ :  syslog "(-) "+ "seturi2$: "+seturi2$
-seturi3$=seturi3$+http$ :  syslog "(-) "+ "seturi3$: "+seturi3$
+seturi0$=seturi0$+http$ : sysd "seturi0$: "+seturi0$
+seturi1$=seturi1$+http$ : sysd "seturi1$: "+seturi1$
+seturi2$=seturi2$+http$ : sysd "seturi2$: "+seturi2$
+seturi3$=seturi3$+http$ : sysd "seturi3$: "+seturi3$
 
- syslog "(i) "+ "opening SIF TCP port..."
-open "TCN:0.0.0.0:"+str$(port_sif) as 0
+sysi "opening SIF TCP port..."
+open "TCN:0.0.0.0:"+str$(port_sif) as H_TCP_SIF
 
 if systype = 0 then
 	for i=0 to 7
-		 syslog "(-) "+ "IX Mobile " + sprintf$("%01d: ",i+1) + sprintf$("%lA",ipapp(i))
+		sysd "IX Mobile " + sprintf$("%01d: ",i+1) + sprintf$("%lA",ipapp(i))
 	next i
-	 syslog "(i) "+ "opening IX Mobile TCP port..."
-	open "TCN:0.0.0.0:"+str$(port_app) as 3
+	sysi "opening IX Mobile TCP port..."
+	open "TCN:0.0.0.0:"+str$(port_app) as H_TCP_APP
 endif
 
-goto 1999
+goto MAINLOOP
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'IPW-1A Loop
 20	
-	 syslog "(i) "+ "opening UDP port..."
-	open "UDP:0.0.0.0:"+str$(port_udp) as 0
+	sysi "opening UDP port..."
+	open "UDP:0.0.0.0:"+str$(port_udp) as H_UDP_SIF
 
-1000
+MAINLOOPIPW
 	'check udp event, always
 	check_udp_evt()
 	'check events
 	if check_udp_evt=1 then process_udp_evt()
-	goto 1000
+	goto MAINLOOPIPW
 	
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'check_udp_evt()
 1010	
 	check_udp_evt=0
-	l = lastlen(0)
+	l = lastlen(H_UDP_SIF)
 	if l>=0 then return
-	read 0,_Min$
+	read H_UDP_SIF,_Min$
 	x=midget(_Min$,1,4)
 	if x=&H01504941 then check_udp_evt=1
 	return
@@ -476,7 +476,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 'process_udp_evt()
 1020	
-	 syslog "(-) "+ "process_udp_evt(): processing event from "+udprmt$
+	sysd "process_udp_evt(): processing event from "+udprmt$
 	srcid = midget(_Min$,5,-2)
 	drelease = midget(_Min$,13,-1)
 	msg = midget(_Min$,14,1)
@@ -490,7 +490,7 @@ goto 1999
 	if msg = &H01 then udp_evt_stay_alive()								: goto 1022
 	if msg = &H41 then udp_evt_init_notice()							: goto 1022
 	if msg = &H08 then udp_evt_monitoring()								: goto 1022
-	 syslog "(-) "+ str$(msg)
+	sysd str$(msg)
 1022
 	return
 
@@ -498,7 +498,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'udp_evt_begin_call()	
 1030
-	 syslog "(-) "+ "udp_evt_begin_call()"
+	sysd "udp_evt_begin_call()"
 	udp_evt_begin_call=0
 	for x=0 to 3
 		if or(relay_cfg(x)=2,relay_cfg(x)=4) then
@@ -521,7 +521,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'udp_evt_begin_comm()	
 1040
-	 syslog "(-) "+ "udp_evt_begin_comm()"
+	sysd "udp_evt_begin_comm()"
 	udp_evt_begin_comm=0
 	for x=0 to 3
 		if relay_cfg(x)>1 then
@@ -546,7 +546,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'udp_evt_door_release()	
 1050
-	 syslog "(-) "+ "udp_evt_door_release()"
+	sysd "udp_evt_door_release()"
 	udp_evt_door_release=0
 	for x = 0 to 3
 		if or(relay_cfg(x)=0,relay_cfg(x)=1) then
@@ -562,7 +562,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'udp_evt_stay_alive()
 1060
-	 syslog "(-) "+ "udp_evt_stay_alive()"
+	sysd "udp_evt_stay_alive()"
 	udp_evt_stay_alive=0
 	for x=0 to 3
 		if relay_cfg(x)>1 then
@@ -582,7 +582,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'udp_evt_init_notice()	
 1070	
-	 syslog "(-) "+ "udp_evt_init_notice()"
+	sysd "udp_evt_init_notice()"
 	udp_evt_init_notice=0
 	for x = 0 to 3
 		if and(door_release_trigger(x)=1, or(relay_cfg(x)=0,relay_cfg(x)=1)) then
@@ -609,7 +609,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'udp_evt_close_door()
 1080
-	 syslog "(-) "+ "udp_evt_close_door()"
+	sysd "udp_evt_close_door()"
 	udp_evt_close_door=0
 	for x = 0 to 3
 		if and(door_release_trigger(x)=1,or(relay_cfg(x)=0,relay_cfg(x)=1)) then
@@ -624,7 +624,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'udp_evt_monitoring()
 1090
-	 syslog "(-) "+ "udp_evt_monitoring()"
+	sysd "udp_evt_monitoring()"
 	udp_evt_monitoring=0
 	for x = 0 to 3
 		if or(relay_cfg(x)=2,relay_cfg(x)=4) then
@@ -646,17 +646,17 @@ goto 1999
 ' logical checks about the event are done in every specific
 ' event handling callback.
 
-1999
+MAINLOOP
 
 	' check for sif event, always
-	check_tcp_evt(0)
+	check_tcp_evt(H_TCP_SIF)
 	' check events
 	if check_tcp_evt=1 then process_sif_evt()
 	' check and process input contacts
 	process_contacts()
 	' check for and process app keepalive, if IX system
-	if systype = 0 then check_tcp_evt(3)
-	goto 1999
+	if systype = 0 then check_tcp_evt(H_TCP_APP)
+	goto MAINLOOP
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' check_tcp_evt()
@@ -664,16 +664,16 @@ goto 1999
 	local mtype
 	check_tcp_evt=0
 	if connected(mtype) then
-		if mtype = 0 then  syslog "(-) "+ "check_tcp_evt(): SIF port connection established"
-		if mtype = 3 then  syslog "(-) "+ "check_tcp_evt(): APP port connection established"
+		if mtype = H_TCP_SIF then sysd "check_tcp_evt(): SIF port connection established"
+		if mtype = H_TCP_APP then sysd "check_tcp_evt(): APP port connection established"
 		tcprmt$=rmthost$(mtype)
-		get_tcp_msg(mtype, 328)
+		get_tcp_msg(mtype, LEN_TCP_EVT)
 		if get_tcp_msg=1 then
-			if mtype = 0 then 
-				 syslog "(-) "+ "check_tcp_evt(): SIF event received, sending ack"
+			if mtype = H_TCP_SIF then 
+				sysd "check_tcp_evt(): SIF event received, sending ack"
 				write mtype, "ACK", 3	
 			endif
-			if mtype = 3 then process_app_evt()
+			if mtype = H_TCP_APP then process_app_evt()
 			' SIF spec: remote peer must close now,
 			' so check socket to be closed from remote side
 			x=_TMR_(0)
@@ -683,12 +683,12 @@ goto 1999
 					' exit after 200 msecs timeout (force close). 
 					' changed 200 to 50: IX audio while calling was quickest
 					if _TMR_(0)-x>50 then
-						 syslog "(e) "+ "check_tcp_evt(): force close for timeout"
+						syse "check_tcp_evt(): force close for timeout"
 						close_reopen_tcp(mtype)
 						goto 2002
 					endif
 				else
-					 syslog "(-) "+ "connected host changed! exiting check_tcp_evt()"
+					sysd "connected host changed! exiting check_tcp_evt()"
 					' another connection is established in the meantime.
 					' assume here (SIF SPEC) the previous has been closed.
 					' don't do anything here, just process previous event
@@ -696,11 +696,11 @@ goto 1999
 				endif
 				goto 2001
 			else
-				 syslog "(-) "+ "check_tcp_evt(): remote peer closed"
+				sysd "check_tcp_evt(): remote peer closed"
 			endif
 2002		check_tcp_evt=1 : return
 		else
-			 syslog "(e) "+ "check_tcp_evt(): rx timeout, brutal close"
+			syse "check_tcp_evt(): rx timeout, brutal close"
 			' no data, no NAK
 			' can be an attempt of attack/scan, we close
 			close_reopen_tcp(mtype)
@@ -713,7 +713,7 @@ goto 1999
 ' TCP is stream based, there is no guarantee the whole data
 ' amount is received at first "read" after connect. So the entire
 ' expected len must be read in a cycle.
-'def
+#define TOUT_TCP_MSG   300
 2010
 	local mstrm, mlen, moffs, tmr_out
 
@@ -727,7 +727,7 @@ goto 1999
 		moffs=moffs+l
 		if moffs=mlen then get_tcp_msg=1 : goto 2012
 	endif
-	if _TMR_(0)-tmr_out>300 then goto 2012
+	if _TMR_(0)-tmr_out>TOUT_TCP_MSG then goto 2012
 	goto 2011
 2012
 	return
@@ -735,35 +735,35 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' process_app_evt()
 2015
-	 syslog "(-) "+ "process_app_evt(): processing event from "+tcprmt$
+	sysd "process_app_evt(): processing event from "+tcprmt$
 	x=val(mid$(_Msm$,1,4))
 	y=val(mid$(_Msm$,17,4))
 	z=check_auth()
 	
 	if x<100 then
-		 syslog "(w) "+ "invalid program type "+str$(x)+" received, discarding data"
+		sysw "invalid program type "+str$(x)+" received, discarding data"
 		return
 	endif
 	
 	'if and(y=1110, z=1) then
 	if z=1 then
-		 syslog "(-) "+ "process_app_evt(): APP keepalive received, sending ack"
-		write 3, "ACK", 3
+		sysd "process_app_evt(): APP keepalive received, sending ack"
+		write H_TCP_APP, "ACK", 3
 	else
-		 syslog "(-) "+ "process_app_evt(): invalid APP keepalive received, sending nak"
-		write 3, "NAK", 3
+		sysd "process_app_evt(): invalid APP keepalive received, sending nak"
+		write H_TCP_APP, "NAK", 3
 	endif
 	return
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' process_sif_evt()
 2020
-	 syslog "(-) "+ "process_sif_evt(): processing event from "+tcprmt$
+	sysd "process_sif_evt(): processing event from "+tcprmt$
 
 	' get program type
 	x=val(mid$(_Msm$,1,4))
 	if x<100 then
-		 syslog "(w) "+ "invalid program type "+str$(x)+" received, discarding data"
+		sysw "invalid program type "+str$(x)+" received, discarding data"
 		return
 	endif
 
@@ -773,14 +773,14 @@ goto 1999
 		srcsid=val(mid$(_Msm$,36,3))
 		dstlid(0)=val(mid$(_Msm$,41,2))
 		dstsid(0)=val(mid$(_Msm$,44,3))
-		 syslog "(-) "+ "process_sif_evt(): src TermID: "+sprintf$("%02d-",srclid)+sprintf$("%03d",srcsid)
-		 syslog "(-) "+ "process_sif_evt(): dst TermID: "+sprintf$("%02d-",dstlid(0))+sprintf$("%03d",dstsid(0))
+		sysd "process_sif_evt(): src TermID: "+sprintf$("%02d-",srclid)+sprintf$("%03d",srcsid)
+		sysd "process_sif_evt(): dst TermID: "+sprintf$("%02d-",dstlid(0))+sprintf$("%03d",dstsid(0))
 	endif
 	if systype = 0 then
 		srcnumber$ = mid$(_Msm$,33,5)
 		dstnumber$ = mid$(_Msm$,41,5)
-		 syslog "(-) "+ "process_sif_evt(): src Station Number: "+srcnumber$ 
-		 syslog "(-) "+ "process_sif_evt(): dst Station Number: "+dstnumber$
+		sysd "process_sif_evt(): src Station Number: "+srcnumber$ 
+		sysd "process_sif_evt(): dst Station Number: "+dstnumber$
 	endif
 	
 	' get SIF event type
@@ -788,7 +788,7 @@ goto 1999
 	
 	if y=0000 then
 		' get 1 to 19 termid's
-		 syslog "(-) "+ "process_sif_evt(): get all 20 dest TermID/Station Numbers"
+		sysd "process_sif_evt(): get all 20 dest TermID/Station Numbers"
 		for i=1 to 19
 			if systype = 1 then
 				dstlid(i)=val(mid$(_Msm$,41+(i*8),2))
@@ -806,21 +806,21 @@ goto 1999
 	if y=0100 then sif_evt_chg_contact()  : goto 2021
 	if y=1111 then sif_evt_init_notice()  : goto 2021
 	
-	 syslog "(-) "+ "unhandled sif event: "+str$(y)+", discarding"	
+	sysd "unhandled sif event: "+str$(y)+", discarding"	
 2021
 	return
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' sif_evt_begin_call()
 2030
-	 syslog "(-) "+ "sif_evt_begin_call()"
+	sysd "sif_evt_begin_call()"
 	
 	sif_evt_begin_call=0
 
 	for x = 0 to 3
 		if or(relay_cfg(x)=2,relay_cfg(x)=4) then
 			z=check_assigned_src_termid(x,1) : if z=0 then goto 2031
-			ioctl x+1,1
+			ioctl x+1,0 ' 20200501 changed to support NC active while calling and comunicating
 		endif
 2031
 	next x
@@ -829,7 +829,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' sif_evt_begin_comm()
 2040
-	 syslog "(-) "+ "sif_evt_begin_comm()"
+	sysd "sif_evt_begin_comm()"
 
 	sif_evt_begin_comm=0
 
@@ -838,9 +838,9 @@ goto 1999
 		if relay_cfg(x)>1 then
 			z=check_assigned_srcdst_termid(x,0) : if z=0 then goto 2041
 			if or(relay_cfg(x)=3,relay_cfg(x)=4) then
-				ioctl x+1,1
+				ioctl x+1,0 ' 20200501 changed to support NC active while calling and comunicating
 			else 
-				if relay_cfg(x)=2 then ioctl x+1,0
+				if relay_cfg(x)=2 then ioctl x+1,1 ' 20200501 changed to support NC active while calling and comunicating
 			endif
 		endif
 2041
@@ -850,14 +850,14 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' sif_evt_end_comm()
 2060
-	 syslog "(-) "+ "sif_evt_end_comm()"
+	sysd "sif_evt_end_comm()"
 
 	sif_evt_end_comm=0
 
 	' relay back open only if not set as door release
 	for x = 0 to 3
 		z=check_assigned_srcdst_termid(x,0) : if z=0 then goto 2061
-		if relay_cfg(x)>1 then ioctl x+1,0
+		if relay_cfg(x)>1 then ioctl x+1,1 ' 20200501 changed to support NC active while calling and comunicating
 2061
 	next x
 	return
@@ -865,13 +865,13 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' sif_evt_door_release() for IS
 2050
-	 syslog "(-) "+ "sif_evt_door_release()"
+	sysd "sif_evt_door_release()"
 
 	sif_evt_door_release=0
 
 	'get contact state, release the door=1, close=0
 	y=midget(_Msm$,200+1,1)-&H30
-	 syslog "(-) "+ "sif_evt_door_release(): contact state: "+str$(y)
+	sysd "sif_evt_door_release(): contact state: "+str$(y)
 
 	'normally, 0=open,1=closed, but logic can be inverted
 	for x = 0 to 3
@@ -893,7 +893,7 @@ goto 1999
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' sif_evt_chg_contact()
 2070
-	 syslog "(-) "+ "sif_evt_chg_contact()"
+	sysd "sif_evt_chg_contact()"
 
 	sif_evt_chg_contact=0
 	
@@ -903,7 +903,7 @@ goto 1999
 	' 2 = calling output (built-in hardware output on some door stations)
 	' 3 = output during comm. (as 2, built-in hardware output on some door stations)
 	if x<>1 then
-		 syslog "(-) "+ "sif_evt_chg_contact(): unhandled contact change event: "+str$(x)
+		sysd "sif_evt_chg_contact(): unhandled contact change event: "+str$(x)
 		return
 	endif
 	
@@ -913,16 +913,16 @@ goto 1999
 			if door_release_trigger(i)=1 then goto 2071
 		next i
 	
-		 syslog "(-) "+ "sif_evt_chg_contact(): no door release trigger active, discarding"
+		sysd "sif_evt_chg_contact(): no door release trigger active, discarding"
 		return
 	endif
 
 2071
 	y=midget(_Msm$,217+1,1)-&H30
-	 syslog "(-) "+ "sif_evt_chg_contact(): contact state: "+str$(y)
+	sysd "sif_evt_chg_contact(): contact state: "+str$(y)
 	
 	z=val(mid$(_Msm$,248+1,4))
-	 syslog "(-) "+ "RY" + str$(z)
+	sysd "RY" + str$(z)
 	if or(z=1,z=0) then  ' only process event for RY1, not 0002
 		'normally, 0=open,1=closed, but logic can be inverted
 		for x = 0 to 3
@@ -930,14 +930,14 @@ goto 1999
 			if or(relay_cfg(x)=0,relay_cfg(x)=1) then
 				z=check_assigned_src_termid(x)
 				if and(z=1,y=0,door_release_trigger(x)=1) then	
-					 syslog "(-) "+ "sif_evt_chg_contact(): door closed"
+					sysd "sif_evt_chg_contact(): door closed"
 					door_release_trigger(x)=0 
 					if relay_cfg(x)=0 then ioctl 1+x,0 else ioctl 1+x,1
 					timer x+1,0
 				endif
 				if systype = 1 then goto 2072
 				if and(z=1,y=1) then
-					 syslog "(-) "+ "sif_evt_chg_contact(): door released"
+					sysd "sif_evt_chg_contact(): door released"
 					door_release_trigger(x)=1
 					if relay_cfg(x)=0 then ioctl 1+x,1 else ioctl 1+x,0
 					timer x+1,300000
@@ -947,14 +947,14 @@ goto 1999
 2072
 		next x
 	else	
-		 syslog "(-) "+ "Ignoring RY" + str$(z)
+		sysd "Ignoring RY" + str$(z)
 	endif
 	return
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
 ' sif_evt_init_notice()
 2080
-	 syslog "(-) "+ "sif_evt_init_notice()"
+	sysd "sif_evt_init_notice()"
 	
 	sif_evt_init_notice=0
 
@@ -980,12 +980,12 @@ goto 1999
 
 	close mtype2
 	delay 0
-	if mtype2 = 0 then 
-		open "TCN:0.0.0.0:"+str$(port_sif) as 0
+	if mtype2 = H_TCP_SIF then 
+		open "TCN:0.0.0.0:"+str$(port_sif) as H_TCP_SIF
 		goto 2101
 	endif
-	if mtype2 = 3 then 
-		open "TCN:0.0.0.0:"+str$(port_app) as 3
+	if mtype2 = H_TCP_APP then 
+		open "TCN:0.0.0.0:"+str$(port_app) as H_TCP_APP
 		goto 2101
 	endif
 	'syslog "it's a trap! mtype2="+str$(mtype2)
@@ -1013,10 +1013,10 @@ goto 1999
 			if and(f,e) then
 				' ok, changed, now see if activated or not
 				if and(iostates,f) then
-					 syslog "(-) "+ "contact closure "+str$(q+1)+" detected"
+					sysd "contact closure "+str$(q+1)+" detected"
 					cclosed(q)
 				else
-					 syslog "(-) "+ "contact "+str$(q+1)+" released"
+					sysd "contact "+str$(q+1)+" released"
 				endif
 			endif
 		next q
@@ -1033,7 +1033,7 @@ goto 1999
 
 	cclosed=0
 
-	 syslog "(-) "+ "cclosed(): contact ["+str$(ccont)+"] closed"
+	sysd "cclosed(): contact ["+str$(ccont)+"] closed"
 	
 	if callin_sources(ccont)=0 then return
 
@@ -1041,15 +1041,15 @@ goto 1999
 3011
 	callin_set_uri(ccont)
 	if callin_set_uri=1 then
-		 syslog "(-) "+ "callin_set_uri success"
+		sysd "callin_set_uri success"
 		callin_retries=0
 3012	callin_callup(ccont)
 		if callin_callup=1 then
-			 syslog "(-) "+ "callin_callup success"
+			sysd "callin_callup success"
 			callin_retries=0
 3013		callin_set_uri_undo(ccont)
 			if callin_set_uri_undo=1 then
-				 syslog "(-) "+ "callin_set_uri_undo success"
+				sysd "callin_set_uri_undo success"
 				goto 3014
 			else
 				' retry on timeout only
@@ -1075,10 +1075,10 @@ goto 1999
 			goto 3015
 		endif
 	endif
-	 syslog "(e) "+ "call-in process failed after 3 retries, exiting."
+	syse "call-in process failed after 3 retries, exiting."
 	return
 3014
-	 syslog "(-) "+ "callin successful"
+	sysd "callin successful"
 3015
 	return
 
@@ -1099,24 +1099,24 @@ goto 1999
 				if and(ipls(k)<>0,lids(k)<>0,sids(k)<>0) then
 					if and(ipls(k)=tcp_sender,lids(k)=srclid,sids(k)=srcsid) then
 						if and(allowed_mask(relm),shl(1,k)) then
-							 syslog "(-) "+ "check_auth(): sender authorized"
+							sysd "check_auth(): sender authorized"
 							check_auth=1
 							goto 4001
 						endif
 					endif
 				endif
 			next k
-		 syslog "(e) "+ "check_auth() : sender TermID not authorized"
+		syse "check_auth() : sender TermID not authorized"
 		endif		
 		if systype = 0 then
 			for k=0 to 8
 				if and(ipapp(k)<>0, ipapp(k)=tcp_sender) then
-					 syslog "(-) "+ "check_auth(): sender authorized"
+					sysd "check_auth(): sender authorized"
 					check_auth=1
 					goto 4001
 				endif
 			next k
-		 syslog "(e) "+ "check_auth(): sender not authorized"
+		syse "check_auth(): sender not authorized"
 		endif
 	endif
 4001
@@ -1133,9 +1133,9 @@ goto 1999
 	if systype = 1 then
 		if and(relay_alid(rels)=srclid,relay_asid(rels)=srcsid) then
 			check_assigned_src_termid=1
-			 syslog "(-) "+ "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned TermID matched"
+			sysd "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned TermID matched"
 		else
-			 syslog "(e) "+ "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned TermID unmatched"
+			syse "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned TermID unmatched"
 		endif
 	endif
 	if systype = 0 then
@@ -1144,20 +1144,20 @@ goto 1999
 			poss = poss + relay_adig(b)
 		next b
 
-		' syslog "(-) "+ "check_assigned_src_termid(): is src "+srcnumber$+"? assigned: "+mid$(relay_astat$,poss+1,relay_adig(rels))
+		'sysd "check_assigned_src_termid(): is src "+srcnumber$+"? assigned: "+mid$(relay_astat$,poss+1,relay_adig(rels))
 		if mid$(relay_astat$,poss+1,relay_adig(rels)) = srcnumber$ then
 			check_assigned_src_termid=1
-			 syslog "(-) "+ "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station Number matched"			
+			sysd "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station Number matched"			
 		else
-			 syslog "(e) "+ "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station Number unmatched"
+			syse "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station Number unmatched"
 		endif
 	endif
 	if systype = 2 then
 		if and(relay_alid(rels)*1000+relay_asid(rels)=srcid) then
 			check_assigned_src_termid=1
-			 syslog "(-) "+ "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station ID matched"
+			sysd "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station ID matched"
 		else
-			 syslog "(e) "+ "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station ID unmatched"
+			syse "check_assigned_src_termid(): relay "+str$(rels+1)+" assigned Station ID unmatched"
 		endif
 	endif
 	return
@@ -1173,9 +1173,9 @@ goto 1999
 	if systype = 1 then
 		if and(relay_alid(reld)=dstlid(0),relay_asid(reld)=dstsid(0)) then
 			check_assigned_dst_termid=1
-			 syslog "(-) "+ "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned TermID matched"
+			sysd "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned TermID matched"
 		else
-			 syslog "(e) "+ "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned TermID unmatched"
+			syse "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned TermID unmatched"
 		endif
 	endif
 	if systype = 0 then
@@ -1184,12 +1184,12 @@ goto 1999
 		for a=0 to (reld-1)
 			posd = posd + relay_adig(a)
 		next a
-		' syslog "(-) "+ "check_assigned_dst_termid(): is dst "+dstnumber$+"? assigned: "+mid$(relay_astat$,posd+1,relay_adig(reld))
+		'sysd "check_assigned_dst_termid(): is dst "+dstnumber$+"? assigned: "+mid$(relay_astat$,posd+1,relay_adig(reld))
 		if mid$(relay_astat$,posd+1,relay_adig(reld)) = dstnumber$ then
 			check_assigned_dst_termid=1
-			 syslog "(-) "+ "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned Station Number matched"
+			sysd "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned Station Number matched"
 		else
-			 syslog "(e) "+ "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned Station Number unmatched"
+			syse "check_assigned_dst_termid(): relay "+str$(reld+1)+" assigned Station Number unmatched"
 		endif
 	endif
 	return
@@ -1209,20 +1209,20 @@ goto 1999
 	check_assigned_srcdst_termid=0
 
 	if multiple_dest then
-		 syslog "(-) "+ "check_assigned_srcdst_termid(): checking all 20 SIF dest TermID's ..."
+		sysd "check_assigned_srcdst_termid(): checking all 20 SIF dest TermID's ..."
 		for i=0 to 19
 			if systype = 1 then
 				if and(relay_alid(relsd)=dstlid(i),relay_asid(relsd)=dstsid(i)) then
 					check_assigned_srcdst_termid=1
-					 syslog "(-) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" multiple assigned TermID matched"
+					sysd "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" multiple assigned TermID matched"
 					goto 4031
 				endif
 			endif
 			if systype = 0 then
-				' syslog "(-) "+ "check_assigned_srcdst_termid(): is dst "+dstnumber$+"? assigned: "+mid$(relay_astat$,possd+1,relay_adig(relsd))
+				'sysd "check_assigned_srcdst_termid(): is dst "+dstnumber$+"? assigned: "+mid$(relay_astat$,possd+1,relay_adig(relsd))
 				if mid$(relay_astat$,possd+1,relay_adig(relsd)) = dstnumber$ then
 					check_assigned_srcdst_termid=1
-					 syslog "(-) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" multiple assigned Station Number matched"
+					sysd "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" multiple assigned Station Number matched"
 					goto 4031
 				endif
 			endif
@@ -1231,15 +1231,15 @@ goto 1999
 		if systype = 1 then
 			if and(relay_alid(relsd)=dstlid(0),relay_asid(relsd)=dstsid(0)) then
 				check_assigned_srcdst_termid=1
-				 syslog "(-) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned TermID matched"
+				sysd "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned TermID matched"
 				goto 4031
 			endif
 		endif
 		if systype = 0 then
-			' syslog "(-) "+ "check_assigned_srcdst_termid(): is dst "+dstnumber$+"? assigned: "+mid$(relay_astat$,possd+1,relay_adig(relsd))
+			'sysd "check_assigned_srcdst_termid(): is dst "+dstnumber$+"? assigned: "+mid$(relay_astat$,possd+1,relay_adig(relsd))
 			if mid$(relay_astat$,possd+1,relay_adig(relsd)) = dstnumber$ then
 				check_assigned_srcdst_termid=1
-				 syslog "(-) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned Station Number matched"
+				sysd "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned Station Number matched"
 				goto 4031
 			endif
 		endif
@@ -1247,20 +1247,20 @@ goto 1999
 	if systype = 1 then
 		if and(relay_alid(relsd)=srclid,relay_asid(relsd)=srcsid) then
 			check_assigned_srcdst_termid=1
-			 syslog "(-) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned TermID matched"
+			sysd "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned TermID matched"
 			goto 4031
 		else
-			 syslog "(-) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned TermID unmatched"
+			sysd "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned TermID unmatched"
 		endif
 	endif
 	if systype = 0 then
-		' syslog "(-) "+ "check_assigned_srcdst_termid(): is src "+srcnumber$+"? assigned: "+mid$(relay_astat$,possd+1,relay_adig(relsd))
+		'sysd "check_assigned_srcdst_termid(): is src "+srcnumber$+"? assigned: "+mid$(relay_astat$,possd+1,relay_adig(relsd))
 		if mid$(relay_astat$,possd+1,relay_adig(relsd)) = srcnumber$ then
 			check_assigned_srcdst_termid=1
-			 syslog "(-) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned Station Number matched"
+			sysd "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned Station Number matched"
 			goto 4031
 		else
-			 syslog "(e) "+ "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned Station Number unmatched"
+			syse "check_assigned_srcdst_termid(): relay "+str$(relsd+1)+" assigned Station Number unmatched"
 		endif
 	endif
 		
@@ -1276,10 +1276,10 @@ goto 1999
 
 	tmp$="TCP:"+sprintf$("%lA",callin_sources(scont))+":80"
 
-	 syslog "(-) "+ "open_callin_socket(): connecting"
-	open tmp$ as 1
-	if mediatype(1)=0 then
-		 syslog "(e) "+ "open_callin_socket(): error opening/connecting TCP handle"
+	sysd "open_callin_socket(): connecting"
+	open tmp$ as H_TCP_CALLIN
+	if mediatype(H_TCP_CALLIN)=0 then
+		syse "open_callin_socket(): error opening/connecting TCP handle"
 		return
 	endif
 	open_callin_socket=1
@@ -1299,10 +1299,10 @@ goto 1999
 
 		' send seturi now
 		on suin+1 goto 5001,5002,5003,5004
-5001	write 1, seturi0$, len(seturi0$) : goto 5005
-5002	write 1, seturi1$, len(seturi1$) : goto 5005
-5003	write 1, seturi2$, len(seturi2$) : goto 5005
-5004	write 1, seturi3$, len(seturi3$) : goto 5005
+5001	write H_TCP_CALLIN, seturi0$, len(seturi0$) : goto 5005
+5002	write H_TCP_CALLIN, seturi1$, len(seturi1$) : goto 5005
+5003	write H_TCP_CALLIN, seturi2$, len(seturi2$) : goto 5005
+5004	write H_TCP_CALLIN, seturi3$, len(seturi3$) : goto 5005
 5005
 		callin_get_http_reply()
 		if callin_get_http_reply=1 then
@@ -1310,15 +1310,15 @@ goto 1999
 			if x=0 then 
 				callin_set_uri=1
 			else
-				translate_error(x) :  syslog "(e) "+ "callin_set_uri() : call error ["+tmp$+"]"
+				translate_error(x) : syse "callin_set_uri() : call error ["+tmp$+"]"
 			endif
 		else
 			callin_set_uri=callin_get_http_reply
 		endif
 
-		if mediatype(1) then close 1
+		if mediatype(H_TCP_CALLIN) then close H_TCP_CALLIN
 	else
-		 syslog "(e) "+ "callin_set_uri() : no URI TermID has been set/enabled, exiting"
+		syse "callin_set_uri() : no URI TermID has been set/enabled, exiting"
 	endif
 	return
 
@@ -1339,7 +1339,7 @@ goto 1999
 
 5015
 	tmp$=tmp$+http$
-	write 1, tmp$, len(tmp$)
+	write H_TCP_CALLIN, tmp$, len(tmp$)
 
 	callin_get_http_reply()
 	if callin_get_http_reply=1 then
@@ -1347,13 +1347,13 @@ goto 1999
 		if x=0 then
 			callin_callup=1
 		else
-			translate_error(x) :  syslog "(e) "+ "callin_callup() : call error ["+tmp$+"]"
+			translate_error(x) : syse "callin_callup() : call error ["+tmp$+"]"
 		endif
 	else
 		callin_callup=callin_get_http_reply
 	endif
 
-	if mediatype(1) then close 1
+	if mediatype(H_TCP_CALLIN) then close H_TCP_CALLIN
 	return
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''	
@@ -1366,7 +1366,7 @@ goto 1999
 	open_callin_socket(uuin)
 	if open_callin_socket=0 then return
 
-	write 1, cuu$, len(cuu$)
+	write H_TCP_CALLIN, cuu$, len(cuu$)
 
 	callin_get_http_reply()
 	if callin_get_http_reply=1 then
@@ -1374,13 +1374,13 @@ goto 1999
 		if x=0 then 
 			callin_set_uri_undo=1
 		else
-			translate_error(x) :  syslog "(e) "+ "callin_set_uri_undo() : call error ["+tmp$+"]"
+			translate_error(x) : syse "callin_set_uri_undo() : call error ["+tmp$+"]"
 		endif
 	else
 		callin_set_uri_undo=callin_get_http_reply
 	endif
 
-	if mediatype(1) then close 1
+	if mediatype(H_TCP_CALLIN) then close H_TCP_CALLIN
 	return
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -1395,7 +1395,7 @@ goto 1999
 	if clen<>0 then
 		' connection close, remote peer close before we read all, 
 		' no need to verify for connected
-		read 1,_Msm$ : l=lastlen(1) 
+		read H_TCP_CALLIN,_Msm$ : l=lastlen(H_TCP_CALLIN) 
 		if l>0 then
 			midcpy _Min$,y,l,_Msm$ : y=y+l : clen=clen-l
 			' clen already received ?
@@ -1408,14 +1408,14 @@ goto 1999
 					' update, how many bytes are still missing
 					clen=clen-((y-1)-(n+3))
 				else
-					 syslog "(e) "+ "callin_get_http_reply() : incorrect http reply"
+					syse "callin_get_http_reply() : incorrect http reply"
 					goto 5034
 				endif
 			endif
 		endif
 		if systype = 1 then
 			if _TMR_(0)-x>500 then
-				 syslog "(e) "+ "callin_get_http_reply() : timeout error"
+				syse "callin_get_http_reply() : timeout error"
 				callin_get_http_reply=-1
 				goto 5034
 			endif
@@ -1427,7 +1427,7 @@ goto 1999
 		callin_get_http_reply=1
 	endif
 5034
-	close 1
+	close H_TCP_CALLIN
 	return
 
 ' translate_error()
@@ -1452,12 +1452,12 @@ goto 1999
 ' safety timers
 100
 	if and(systype=2,door_release_trigger(0)=0) then
-		 syslog "(e) "+ "safety timer : no station keep alive message, closing relay 1"
+		syse "safety timer : no station keep alive message, closing relay 1"
 		ioctl 1,0
 		any_call_src = 0
 	endif
 	if door_release_trigger(0)=1 then
-		 syslog "(e) "+ "safety timer : relay 1 detected door released, closing"
+		syse "safety timer : relay 1 detected door released, closing"
 		door_release_trigger(0)=0
 		if or(relay_cfg(0)=0,relay_cfg(0)=1) then
 				if relay_cfg(0)=0 then ioctl 1,0 else ioctl 1,1
@@ -1468,12 +1468,12 @@ goto 1999
 
 200
 	if and(systype=2,door_release_trigger(1)=0) then
-		 syslog "(e) "+ "safety timer : no station keep alive message, closing relay 2"
+		syse "safety timer : no station keep alive message, closing relay 2"
 		ioctl 2,0
 		any_call_src = 0
 	endif
 	if door_release_trigger(1)=1 then
-		 syslog "(e) "+ "safety timer : relay 2 detected door released, closing"
+		syse "safety timer : relay 2 detected door released, closing"
 		door_release_trigger(1)=0
 		if or(relay_cfg(1)=0,relay_cfg(1)=1) then
 				if relay_cfg(1)=0 then ioctl 2,0 else ioctl 2,1
@@ -1483,12 +1483,12 @@ goto 1999
 	return
 300
 	if and(systype=2,door_release_trigger(2)=0) then
-		 syslog "(e) "+ "safety timer : no station keep alive message, closing relay 3"
+		syse "safety timer : no station keep alive message, closing relay 3"
 		ioctl 3,0
 		any_call_src = 0
 	endif
 	if door_release_trigger(2)=1 then
-		 syslog "(e) "+ "safety timer : relay 3 detected door released, closing"
+		syse "safety timer : relay 3 detected door released, closing"
 		door_release_trigger(2)=0
 		if or(relay_cfg(2)=0,relay_cfg(2)=1) then
 				if relay_cfg(2)=0 then ioctl 3,0 else ioctl 3,1
@@ -1499,12 +1499,12 @@ goto 1999
 
 400
 	if and(systype=2,door_release_trigger(3)=0) then
-		 syslog "(e) "+ "safety timer : no station keep alive message, closing relay 4"
+		syse "safety timer : no station keep alive message, closing relay 4"
 		ioctl 4,0
 		any_call_src = 0
 	endif
 	if door_release_trigger(3)=1 then
-		 syslog "(e) "+ "safety timer : relay 4 detected door released, closing"
+		syse "safety timer : relay 4 detected door released, closing"
 		door_release_trigger(3)=0
 		if or(relay_cfg(3)=0,relay_cfg(3)=1) then
 				if relay_cfg(3)=0 then ioctl 4,0 else ioctl 4,1

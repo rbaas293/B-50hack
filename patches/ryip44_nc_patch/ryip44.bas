@@ -43,8 +43,8 @@ dim nul$
 dim htype
 htype=iostate(60000)
 if and(htype<>47 ,0=0) then
-	 syslog "(e) "+ "incorrect hardware type, htype= "+ str$(htype)
-'	end
+	 syslog "(e) "+ "incorrect hardware type, exiting"
+	end
 endif
 
 'def
@@ -247,7 +247,7 @@ relay_cfg(3)=midget(stp$,4,1)
 
 ' reset all relays, check if some are normally closed
 for x = 0 to 3
-	if relay_cfg(x)=1 then ioctl x+1,1 else ioctl x+1,0
+	if relay_cfg(x)>=1 then ioctl x+1,1 else ioctl x+1,0
 next x
 
  syslog "(-) "+ "relay_cfg(0): "+str$(relay_cfg(0))
@@ -820,7 +820,7 @@ goto 1999
 	for x = 0 to 3
 		if or(relay_cfg(x)=2,relay_cfg(x)=4) then
 			z=check_assigned_src_termid(x,1) : if z=0 then goto 2031
-			ioctl x+1,1
+			ioctl x+1,0
 		endif
 2031
 	next x
@@ -838,9 +838,9 @@ goto 1999
 		if relay_cfg(x)>1 then
 			z=check_assigned_srcdst_termid(x,0) : if z=0 then goto 2041
 			if or(relay_cfg(x)=3,relay_cfg(x)=4) then
-				ioctl x+1,1
+				ioctl x+1,0
 			else 
-				if relay_cfg(x)=2 then ioctl x+1,0
+				if relay_cfg(x)=2 then ioctl x+1,1
 			endif
 		endif
 2041
@@ -857,7 +857,7 @@ goto 1999
 	' relay back open only if not set as door release
 	for x = 0 to 3
 		z=check_assigned_srcdst_termid(x,0) : if z=0 then goto 2061
-		if relay_cfg(x)>1 then ioctl x+1,0
+		if relay_cfg(x)>1 then ioctl x+1,1
 2061
 	next x
 	return

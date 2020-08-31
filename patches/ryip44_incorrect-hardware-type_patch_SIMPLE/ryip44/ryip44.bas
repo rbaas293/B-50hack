@@ -43,7 +43,7 @@ dim nul$
 dim htype
 htype=iostate(60000)
 if and(htype<>47 ,0=0) then
-	 syslog "(e) "+ "incorrect hardware type, htype= "+ str$(htype)
+	 syslog "(e) "+ "incorrect hardware type, exiting"
 '	end
 endif
 
