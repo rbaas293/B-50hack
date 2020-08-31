@@ -7,7 +7,7 @@ and so you can know even more...
 ### Name
 `make_ryip44.ps1`
 ### Usage
-`.\make_ryip44.ps1 [-PatchName <PatchName>] [-Name <application-name>]`[-f | -Force]`
+`.\make_ryip44.ps1 [-PatchName <PatchName>] [-Name <application-name>] [-f | -Force]`
 
 #### Parameters
 
