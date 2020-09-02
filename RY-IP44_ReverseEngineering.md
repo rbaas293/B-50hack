@@ -1,6 +1,9 @@
-# Files Needed:
+# RY-IP44 BAS Application Files Needed:
+
+`ryip44v2-2.bin` is Located in `resources` subdirectory.
 
 
+When `ryip44v2-2.bin` is open in `010 Editor` (while viewing in Text/Code view), the following line numbers state the start of the file:
 
 | File (in order)         | line in ryip44v2_2.bin |
 | ----------------------- | ---------------------- |
@@ -16,14 +19,11 @@
 | ryip44_uihappsetup.html | 7234***                |
 | ryip44_uimask.html      | 7349***                |
 
-1901 has info about imx login stuff. this is where the `airephone` tab comes from
+Line 1901 has info about imx login stuff. This is where the `Aiphone` tab comes from
 
-I really need to have from 10000h and forward
+# Info about token file ripped from `ryip44v2-2.bin`
 
-
-# Info about token file ripped from ryip44v2-2.bin
-
-1. Section has a header as follows:
+One section has a header as follows:
 ``` 
 RST1 Seg:C400 Off:0000 Len:00025DB4 CoB1
 ```
@@ -32,11 +32,9 @@ has a length of 25DB4h. Which matches up with the file starting at `COB1`
 and ending at the estimated loacation in `ryip44v2-2.bin` 
 
 
+## Comparing With Barix Provided Example `barionet.bas`
 
-## Comparing with example bcl
-
-compare to example `barionetbcl.cob` from update-recovery to ` barionet.bas `--> tok
-then whole directory to .cob
+comparing to `barionet50_kit_vb202_20150521\update-rescue\barionetbcl.cob` 
 
 | File (in order)   | Line Number in cob file |
 | ----------------- | ----------------------- |
@@ -52,3 +50,27 @@ then whole directory to .cob
 ** The first lines content of the file starts on the line number documented. Often it is at the end of the previous files last line.
 
  *** There is `web2cob` generated content in between previous files last line and files first line.
+
+##### Notes:
+
+```
+262FAh
+
+
+
+size (old): 25DB4h
+
+start: 3076 or 2DC62h
+
+end (orig): 7374 or 53A15h
+
+end: 
+
+size: 25f49
+
+
+
+end (patch_comments): 53D0Dh
+
+size (new_comments) =260ACh
+```
