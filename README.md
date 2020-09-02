@@ -1,5 +1,5 @@
 # B-50hack
-Reverse Engineering Documentation of Aiphones RY-IP44 BCL Application. See `RY-IP44_ReverseEngineering`.
+Reverse Engineering Documentation of Aiphones RY-IP44 BCL Application. See [RY-IP44_ReverseEngineering.md](https://github.com/rbaas293/B-50hack/blob/master/RY-IP44_ReverseEngineering.md).
 
 This Repository Duels as a Development Skeleton for Application Development on a **Barix** [Barionet 50](https://www.barix.com/devices/barionet/barionet-50).
 
@@ -13,13 +13,13 @@ This Repository Duels as a Development Skeleton for Application Development on a
 #### Parameters
 
 * `Name <application-name>`
-  * Name of application directory.
+  * Name of application directory. Defaults to `ryip44`.
 * `PatchName <PatchName>` 
   * Name of patch you are creating, will output to directory `patches/<PatchName>`
-* `-m <patch-description>` | `-Description <patch-description>`
+* `m <patch-description>` | `Description <patch-description>`
   * Description of patch you are creating, outputs a markdown file to `patches/<PatchName>/README.md`
 * `Force`
-  * Switch to force overwrite of an existing patch.
+  * Switch to force overwrite of an existing patch. Defaults to `false`.
 
 #### Example
 ```PowerShell
