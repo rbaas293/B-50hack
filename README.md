@@ -1,7 +1,7 @@
 # B-50hack
 Reverse Engineering Documentation of Aiphones RY-IP44 BCL Application. See [RY-IP44_ReverseEngineering.md](https://github.com/rbaas293/B-50hack/blob/master/RY-IP44_ReverseEngineering.md).
 
-This Repository Duels as a Development Skeleton for Application Development on a **Barix** [Barionet 50](https://www.barix.com/devices/barionet/barionet-50).
+This Repository Duels as a Skeleton for Application Development for a **Barix** [Barionet 50](https://www.barix.com/devices/barionet/barionet-50).
 
 ## Compile/tokenize Script
 ### Name
@@ -23,7 +23,7 @@ This Repository Duels as a Development Skeleton for Application Development on a
 
 #### Example
 ```PowerShell
-.\make_bas.ps1 -Name ryip44 -PatchName test123 -m "Patch to test if the make_bas.ps1 is working properly." -Force`
+.\make_bas.ps1 -Name ryip44 -PatchName test123 -m "Patch to test if the make_bas.ps1 is working properly." -Force
 ```
 ## Compiling/Tokenizing Guide
 
